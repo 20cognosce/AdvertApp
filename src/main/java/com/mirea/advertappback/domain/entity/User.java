@@ -34,16 +34,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Integer id;
+    private Integer id;
     
     @Column(name = "first_name")
-    String firstName;
+    private String firstName;
     @Column(name = "last_name")
-    String last_name;
+    private String lastName;
     @Column(name = "phone")
     private String phone;
     @Column(name = "email")
-    String email;
+    private String email;
     @Column(name = "hash_password")
     private String hashPassword;
 
@@ -57,5 +57,5 @@ public class User {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-    List<Advert> adverts;
+    private List<Advert> adverts;
 }

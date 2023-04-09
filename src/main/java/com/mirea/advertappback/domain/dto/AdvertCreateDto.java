@@ -9,21 +9,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdvertDto {
+public class AdvertCreateDto {
 
-    private Long id;
     private String title;
     private String description;
-    private LocalDateTime published;
-    private LocalDateTime updated;
-    private User user;
+    private Long userId;
     private Address address;
-    private List<Photo> photos; //TODO: fix to PhotoDto
+    private List<Photo> photos;
 }

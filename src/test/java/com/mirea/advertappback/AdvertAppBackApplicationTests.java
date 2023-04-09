@@ -9,5 +9,4 @@ class AdvertAppBackApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

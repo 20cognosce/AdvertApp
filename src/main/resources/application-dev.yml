@@ -3,7 +3,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/advert-db
     username: postgres
     password: password
-
   sql:
     init:
       mode: always
+  security:
+    user:
+      password: password

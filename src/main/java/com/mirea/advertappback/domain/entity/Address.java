@@ -31,15 +31,15 @@ public class Address {
     private Long id;
 
     @Column(name = "county")
-    private String county = "";
+    private String county;
     @Column(name = "city")
-    private String city = "";
+    private String city;
     @Column(name = "district")
-    private String district = "";
+    private String district;
     @Column(name = "street")
-    private String street = "";
+    private String street;
     @Column(name = "house_number")
-    private String houseNumber = "";
+    private String houseNumber;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
     private List<Advert> adverts;

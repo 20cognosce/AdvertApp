@@ -29,7 +29,7 @@ public class Photo {
     private Long id;
 
     @Column(name = "title")
-    private String title = "";
+    private String title;
     @Column(name = "path")
     private String path;
 
