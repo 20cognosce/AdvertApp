@@ -6,25 +6,32 @@ import com.mirea.advertapp.domain.dto.UserDto;
 import com.mirea.advertapp.domain.entity.User;
 import com.mirea.advertapp.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private UserMapper userMapper;
 
-    public User create(User user) {
-        return userRepository.save(user);
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User create(UserCreateDto userCreateDto) {
         User user = userMapper.userCreateDtoToUser(userCreateDto);
+        user.setHashPassword(passwordEncoder.encode(new String(userCreateDto.getPassword())));
         return userRepository.save(user);
     }
 
@@ -37,5 +44,23 @@ public class UserService {
     public List<UserDto> getAllDto() {
         List<User> users = getAll();
         return userMapper.userListToUserDtoList(users);
+    }
+
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Email " + email + " not found"));
+    }
+
+    public Optional<User> validateAuthCandidate(String email, char[] password) {
+        try {
+            User user = getByEmail(email);
+            if (passwordEncoder.matches(new String(password), user.getHashPassword())) {
+                return Optional.of(user);
+            } else {
+                return Optional.empty();
+            }
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 }

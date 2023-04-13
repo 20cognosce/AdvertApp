@@ -6,7 +6,6 @@ import com.mirea.advertapp.domain.entity.User;
 import com.mirea.advertapp.domain.entityenum.Role;
 import com.mirea.advertapp.domain.entityenum.UserAccountStatus;
 import org.mapstruct.Mapper;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
@@ -18,10 +17,8 @@ public abstract class UserMapper {
         return User.builder()
                 .firstName(userCreateDto.getFirstName())
                 .lastName(userCreateDto.getLastName())
+                .email(userCreateDto.getUsername())
                 .phone(userCreateDto.getPhone())
-                .email(userCreateDto.getEmail())
-                .hashPassword(new BCryptPasswordEncoder(16)
-                        .encode(new String(userCreateDto.getPassword())))
                 .role(Role.USER)
                 .status(UserAccountStatus.ACTIVE)
                 .build();

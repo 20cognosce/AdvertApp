@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdvertService {
 
-    @Autowired
-    private AdvertRepository advertRepository;
+    private final AdvertRepository advertRepository;
 
+    @Autowired
+    public AdvertService(AdvertRepository advertRepository) {
+        this.advertRepository = advertRepository;
+    }
 }

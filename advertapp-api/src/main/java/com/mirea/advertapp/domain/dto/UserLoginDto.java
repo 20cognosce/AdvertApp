@@ -1,17 +1,16 @@
 package com.mirea.advertapp.domain.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Builder
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCreateDto {
+public class UserLoginDto {
 
-    private String firstName;
-    private String lastName;
-    private String phone;
     private String username;
     private char[] password;
 }
