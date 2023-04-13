@@ -32,17 +32,14 @@ public class SpringSecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/api/books", "/api/books/**").hasAnyAuthority(ADMIN.name(), USER.name())
-                .requestMatchers(HttpMethod.GET, "/api/users/me").hasAnyAuthority(ADMIN.name(), USER.name())
-                .requestMatchers("/api/books", "/api/books/**").hasAuthority(ADMIN.name())
-                .requestMatchers("/api/users", "/api/users/**").hasAuthority(ADMIN.name())
-                .requestMatchers("/public/**", "/auth/**").permitAll()
-                .requestMatchers("/", "/error", "/csrf", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                .requestMatchers( "/users/**").hasAnyAuthority(ADMIN.name(), USER.name())
+                .requestMatchers("/", "/error", "/health/check").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        //http.cors().and().csrf().disable();
+        http.csrf().disable();
         return http.build();
     }
 }
