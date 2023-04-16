@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS advert
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-CREATE TABLE IF NOT EXISTS photo
+CREATE TABLE IF NOT EXISTS image
 (
     id        SERIAL PRIMARY KEY,
     title     VARCHAR(255),

@@ -1,7 +1,6 @@
 package com.mirea.advertapp.domain.dto;
 
 import com.mirea.advertapp.domain.entity.Address;
-import com.mirea.advertapp.domain.entity.Photo;
 import com.mirea.advertapp.domain.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,5 +23,5 @@ public class AdvertDto {
     private LocalDateTime updated;
     private User user;
     private Address address;
-    private List<Photo> photos; //TODO: fix to PhotoDto
+    private List<ImageDto> images;
 }

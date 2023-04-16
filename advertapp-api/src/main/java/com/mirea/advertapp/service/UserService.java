@@ -46,9 +46,22 @@ public class UserService {
         return userMapper.userListToUserDtoList(users);
     }
 
+    public User getById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Id " + id + " not found"));
+    }
+
+    public UserDto getByIdDto(Long id) {
+        return userMapper.userToUserDto(getById(id));
+    }
+
     public User getByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Email " + email + " not found"));
+    }
+
+    public UserDto convertToDto(User user) {
+        return userMapper.userToUserDto(user);
     }
 
     public Optional<User> validateAuthCandidate(String email, char[] password) {

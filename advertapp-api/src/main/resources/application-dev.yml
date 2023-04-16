@@ -13,3 +13,5 @@ spring:
 app:
   cors:
     allowed-origins: http://localhost:3000
+
+image-storage-dir: "${user.home}/static"

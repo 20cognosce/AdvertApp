@@ -1,11 +1,10 @@
 package com.mirea.advertapp.repo;
 
-import com.mirea.advertapp.domain.entity.Advert;
+import com.mirea.advertapp.domain.entity.Image;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AdvertRepository extends CrudRepository<Advert, Long> {
-
+public interface ImageRepository extends CrudRepository<Image, Long> {
 
 }
