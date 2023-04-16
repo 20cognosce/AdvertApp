@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -49,6 +50,7 @@ public class AdvertService {
     }
 
     public Advert update(Advert advert) {
+        advert.setUpdated(LocalDateTime.now());
         return advertRepository.save(advert);
     }
 }

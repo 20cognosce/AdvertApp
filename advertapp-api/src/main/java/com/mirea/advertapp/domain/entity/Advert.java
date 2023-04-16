@@ -37,6 +37,6 @@ public class Advert {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "advert", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "advert", cascade = CascadeType.ALL)
     private List<Image> images;
 }

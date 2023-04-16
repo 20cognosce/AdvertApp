@@ -21,7 +21,7 @@ public class AdvertDto {
     private String description;
     private LocalDateTime published;
     private LocalDateTime updated;
-    private User user;
+    private UserDto user;
     private Address address;
     private List<ImageDto> images;
 }

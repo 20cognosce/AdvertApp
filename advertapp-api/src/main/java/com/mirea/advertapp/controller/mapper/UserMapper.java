@@ -6,10 +6,13 @@ import com.mirea.advertapp.domain.entity.User;
 import com.mirea.advertapp.domain.entityenum.Role;
 import com.mirea.advertapp.domain.entityenum.UserAccountStatus;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = AdvertMapper.class)
 public abstract class UserMapper {
 
     public User userCreateDtoToUser(UserCreateDto userCreateDto) {
@@ -24,7 +27,16 @@ public abstract class UserMapper {
                 .build();
     }
 
+    @Mapping(target = "adverts", qualifiedBy = AdvertWithoutUser.class)
     public abstract UserDto userToUserDto(User user);
 
-    public abstract List<UserDto> userListToUserDtoList(List<User> users);
+    @Named("noAdverts")
+    @Mapping(target = "adverts", ignore = true)
+    public abstract UserDto userToUserDtoWithoutAdverts(User user);
+
+    public List<UserDto> userListToUserDtoList(List<User> users) {
+        return users.stream()
+                .map(this::userToUserDto)
+                .collect(Collectors.toList());
+    }
 }
