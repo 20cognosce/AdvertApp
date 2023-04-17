@@ -48,30 +48,25 @@ public class ImageService {
         }
     }
 
-    public String uploadImage(MultipartFile image, Long advertId) throws IllegalArgumentException {
+    public String uploadImage(MultipartFile image, Long advertId, String title) throws IllegalArgumentException {
         Advert advert = advertService.getById(advertId);
 
         if (!verifyImage(image)) {
             throw new IllegalArgumentException("File extension not specified");
         }
-        Image imageEntity = saveImageToFileSystem(image)
+
+        Image imageEntity = saveImageToFileSystem(image, advert)
                 .orElseThrow(() -> new IllegalArgumentException("Failed to save image"));
+        imageEntity.setTitle(title);
+        imageEntity.setAdvert(advert);
 
         imageRepository.save(imageEntity);
-        advert.getImages().add(imageEntity);
-        advertService.update(advert);
-
         return imageEntity.getPath();
     }
 
     public Resource downloadImage(@PathVariable("id") Long id) {
         Image image = imageRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User with id = " + id + " not found"));
-
-        /*File foundFile = Stream.of(Objects.requireNonNull(imageStorageDir.toFile().listFiles()))
-                .filter(file -> getFileNameWithoutExtension(file.getName()).equals(id))
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Image not found"));*/
+                .orElseThrow(() -> new EntityNotFoundException("Image with id = " + id + " not found"));
 
         File foundFile = new File(image.getPath());
         return new PathResource(foundFile.getPath());
@@ -84,9 +79,12 @@ public class ImageService {
         return "jpg".equals(extensionType) || "jpeg".equals(extensionType);
     }
 
-    private Optional<Image> saveImageToFileSystem(MultipartFile image) {
+    private Optional<Image> saveImageToFileSystem(MultipartFile image, Advert advert) {
+        File folder = new File(imageStorageDir + "/" + advert.getId());
+        folder.mkdir();
+
         String targetFileName = image.getOriginalFilename();
-        Path targetPath = this.imageStorageDir.resolve(Objects.requireNonNull(targetFileName));
+        Path targetPath = folder.toPath().resolve(Objects.requireNonNull(targetFileName));
 
         try (InputStream in = image.getInputStream()) {
             try (OutputStream out = Files.newOutputStream(targetPath, StandardOpenOption.CREATE)) {
@@ -100,9 +98,5 @@ public class ImageService {
                 Image.builder()
                 .path(targetPath.toString())
                 .build());
-    }
-
-    private static String getFileNameWithoutExtension(String fileName) {
-        return fileName.substring(0, fileName.lastIndexOf('.'));
     }
 }

@@ -9,7 +9,6 @@ import com.mirea.advertapp.repo.AdvertRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -47,10 +46,5 @@ public class AdvertService {
     public List<AdvertDto> getAllDto() {
         List<Advert> adverts = getAll();
         return advertMapper.advertListToAdvertDtoList(adverts);
-    }
-
-    public Advert update(Advert advert) {
-        advert.setUpdated(LocalDateTime.now());
-        return advertRepository.save(advert);
     }
 }
