@@ -25,12 +25,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return mapUserToCustomUserDetails(user, authorities);
     }
 
-    private CustomUserDetails mapUserToCustomUserDetails(User user, List<SimpleGrantedAuthority> authorities) {
-        CustomUserDetails customUserDetails = new CustomUserDetails();
-        customUserDetails.setId(user.getId());
-        customUserDetails.setEmail(user.getEmail());
-        customUserDetails.setHashPassword(user.getHashPassword());
-        customUserDetails.setAuthorities(authorities);
-        return customUserDetails;
+    private UserDetailsImpl mapUserToCustomUserDetails(User user, List<SimpleGrantedAuthority> authorities) {
+        UserDetailsImpl userDetailsImpl = new UserDetailsImpl();
+        userDetailsImpl.setId(user.getId());
+        userDetailsImpl.setEmail(user.getEmail());
+        userDetailsImpl.setHashPassword(user.getHashPassword());
+        userDetailsImpl.setAuthorities(authorities);
+        userDetailsImpl.setUser(user);
+        return userDetailsImpl;
     }
 }

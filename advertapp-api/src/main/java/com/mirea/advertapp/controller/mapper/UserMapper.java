@@ -17,7 +17,7 @@ public abstract class UserMapper {
         return User.builder()
                 .firstName(userCreateDto.getFirstName())
                 .lastName(userCreateDto.getLastName())
-                .email(userCreateDto.getUsername())
+                .email(userCreateDto.getEmail())
                 .phone(userCreateDto.getPhone())
                 .role(Role.USER)
                 .status(UserAccountStatus.ACTIVE)

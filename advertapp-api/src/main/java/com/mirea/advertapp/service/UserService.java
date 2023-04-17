@@ -1,12 +1,12 @@
 package com.mirea.advertapp.service;
 
+import com.mirea.advertapp.controller.exception.EntityNotFoundException;
 import com.mirea.advertapp.controller.mapper.UserMapper;
 import com.mirea.advertapp.domain.dto.UserCreateDto;
 import com.mirea.advertapp.domain.dto.UserDto;
 import com.mirea.advertapp.domain.entity.User;
 import com.mirea.advertapp.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -46,9 +46,22 @@ public class UserService {
         return userMapper.userListToUserDtoList(users);
     }
 
+    public User getById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User with id = " + id + " not found"));
+    }
+
+    public UserDto getByIdDto(Long id) {
+        return userMapper.userToUserDto(getById(id));
+    }
+
     public User getByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Email " + email + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User with email " + email + " not found"));
+    }
+
+    public UserDto convertToDto(User user) {
+        return userMapper.userToUserDto(user);
     }
 
     public Optional<User> validateAuthCandidate(String email, char[] password) {

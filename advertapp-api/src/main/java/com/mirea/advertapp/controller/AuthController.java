@@ -20,7 +20,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthDto> login(@RequestBody UserLoginDto loginDto) {
-        Optional<User> userOptional = userService.validateAuthCandidate(loginDto.getUsername(), loginDto.getPassword());
+        Optional<User> userOptional = userService.validateAuthCandidate(loginDto.getEmail(), loginDto.getPassword());
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();

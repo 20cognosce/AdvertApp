@@ -1,5 +1,6 @@
 package com.mirea.advertapp.security;
 
+import com.mirea.advertapp.domain.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,12 +8,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 @Data
-public class CustomUserDetails implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     private Long id;
     private String email;
     private String hashPassword;
     private Collection<? extends GrantedAuthority> authorities;
+    private User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
