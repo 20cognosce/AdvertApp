@@ -1,12 +1,12 @@
 package com.mirea.advertapp.service;
 
+import com.mirea.advertapp.controller.exception.EntityNotFoundException;
 import com.mirea.advertapp.controller.mapper.AdvertMapper;
 import com.mirea.advertapp.domain.dto.AdvertCreateDto;
 import com.mirea.advertapp.domain.dto.AdvertDto;
 import com.mirea.advertapp.domain.entity.Advert;
 import com.mirea.advertapp.repo.AdvertRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,7 +32,7 @@ public class AdvertService {
 
     public Advert getById(Long id) {
         return advertRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("Id " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Advert with id = " + id + " not found"));
     }
 
     public AdvertDto getByIdDto(Long id) {

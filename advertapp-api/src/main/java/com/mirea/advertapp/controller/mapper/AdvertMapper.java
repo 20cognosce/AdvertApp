@@ -6,14 +6,12 @@ import com.mirea.advertapp.domain.entity.Advert;
 import com.mirea.advertapp.service.UserService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring", uses = UserMapper.class)
+@Mapper(componentModel = "spring")
 public abstract class AdvertMapper {
 
     @Autowired
@@ -33,16 +31,8 @@ public abstract class AdvertMapper {
                 .build();
     }
 
-    @Mapping(target = "user", qualifiedByName = "noAdverts")
+    @Mapping(source = "advert.user.id", target = "userId")
     public abstract AdvertDto advertToAdvertDto(Advert advert);
 
-    @AdvertWithoutUser
-    @Mapping(target = "user", ignore = true)
-    public abstract AdvertDto advertToAdvertDtoWithoutUser(Advert advert);
-
-    public List<AdvertDto> advertListToAdvertDtoList(List<Advert> adverts) {
-        return adverts.stream()
-                .map(this::advertToAdvertDto)
-                .collect(Collectors.toList());
-    }
+    public abstract List<AdvertDto> advertListToAdvertDtoList(List<Advert> adverts);
 }

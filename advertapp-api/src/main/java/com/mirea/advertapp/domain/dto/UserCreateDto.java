@@ -12,6 +12,6 @@ public class UserCreateDto {
     private String firstName;
     private String lastName;
     private String phone;
-    private String username;
+    private String email;
     private char[] password;
 }

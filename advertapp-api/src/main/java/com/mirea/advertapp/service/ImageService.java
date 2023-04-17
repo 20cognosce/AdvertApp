@@ -1,5 +1,6 @@
 package com.mirea.advertapp.service;
 
+import com.mirea.advertapp.controller.exception.EntityNotFoundException;
 import com.mirea.advertapp.domain.entity.Advert;
 import com.mirea.advertapp.domain.entity.Image;
 import com.mirea.advertapp.repo.ImageRepository;
@@ -65,12 +66,12 @@ public class ImageService {
 
     public Resource downloadImage(@PathVariable("id") Long id) {
         Image image = imageRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Id " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User with id = " + id + " not found"));
 
         /*File foundFile = Stream.of(Objects.requireNonNull(imageStorageDir.toFile().listFiles()))
                 .filter(file -> getFileNameWithoutExtension(file.getName()).equals(id))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Image not found"));*/
+                .orElseThrow(() -> new EntityNotFoundException("Image not found"));*/
 
         File foundFile = new File(image.getPath());
         return new PathResource(foundFile.getPath());

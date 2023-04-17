@@ -14,8 +14,14 @@ import java.time.LocalDateTime;
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ SQLException.class, DataAccessException.class })
-    protected ResponseEntity<ExceptionResponseEntity> handleException(RuntimeException ex) {
+    protected ResponseEntity<ExceptionResponseEntity> handleSqlException(RuntimeException ex) {
         var exceptionResponse = new ExceptionResponseEntity(ex.getClass().getName(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({ EntityNotFoundException.class })
+    protected ResponseEntity<ExceptionResponseEntity> handleNotFoundException(RuntimeException ex) {
+        var exceptionResponse = new ExceptionResponseEntity(ex.getClass().getName(), ex.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 }
