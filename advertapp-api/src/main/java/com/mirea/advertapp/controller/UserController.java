@@ -25,6 +25,11 @@ public class UserController {
         return userService.getAllDto();
     }
 
+    @GetMapping("/count")
+    public Integer getAllCount() {
+        return userService.getAll().size();
+    }
+
     @GetMapping("/{id}")
     public UserDto getById(@PathVariable("id") Long id) {
         return userService.getByIdDto(id);

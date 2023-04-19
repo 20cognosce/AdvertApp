@@ -12,5 +12,6 @@ import lombok.Setter;
 public class ImageDto {
 
     private Long id;
+    private Long advertId;
     private String title;
 }

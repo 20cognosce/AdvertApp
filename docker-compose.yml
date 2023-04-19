@@ -3,6 +3,7 @@ version: '3.8'
 services:
   db:
     image: postgres:alpine
+    container_name: db-container
     restart: always
     ports:
       - "5432:5432"
@@ -10,3 +11,21 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: advert-db
+
+  backend:
+    build: ./advertapp-api
+    container_name: backend-container
+    ports:
+      - "8080:8080"
+    links:
+      - db
+
+  frontend:
+    stdin_open: true
+    tty: true
+    build: ./advertapp-ui
+    container_name: frontend-container
+    ports:
+      - "3000:3000"
+    links:
+      - backend

@@ -31,7 +31,7 @@ public abstract class AdvertMapper {
                 .build();
     }
 
-    @Mapping(source = "advert.user.id", target = "userId")
+    @Mapping(source = "user.id", target = "userId")
     public abstract AdvertDto advertToAdvertDto(Advert advert);
 
     public abstract List<AdvertDto> advertListToAdvertDtoList(List<Advert> adverts);

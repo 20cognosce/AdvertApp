@@ -26,11 +26,11 @@ function signup(user) {
 }
 
 function numberOfUsers() {
-  return instance.get('/public/numberOfUsers')
+  return instance.get('/users/count')
 }
 
 function numberOfBooks() {
-  return instance.get('/public/numberOfBooks')
+  return instance.get('/adverts/count')
 }
 
 function getUsers(user, username) {

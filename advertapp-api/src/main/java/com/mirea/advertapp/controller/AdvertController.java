@@ -22,6 +22,11 @@ public class AdvertController {
         return advertService.getAllDto();
     }
 
+    @GetMapping("/count")
+    public Integer getAllCount() {
+        return advertService.getAll().size();
+    }
+
     @GetMapping("/{id}")
     public AdvertDto getById(@PathVariable("id") Long id) {
         return advertService.getByIdDto(id);
