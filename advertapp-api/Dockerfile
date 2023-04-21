@@ -1,4 +1,10 @@
+FROM maven:3.8.3-openjdk-17 AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+WORKDIR /home/app
+RUN mvn clean install -DskipTests=true
+
 FROM openjdk:17
 EXPOSE 8080
-ADD build/libs/advertapp-api-0.0.1.jar advertapp-api.jar
-ENTRYPOINT ["java", "-jar", "advertapp-api.jar"]
+COPY --from=build /home/app/target/advertapp-api-1.0.0.jar /usr/local/lib/advertapp-api.jar
+ENTRYPOINT ["java", "-jar", "/usr/local/lib/advertapp-api.jar"]
