@@ -24,7 +24,12 @@ public class AuthController {
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            return ResponseEntity.ok(new AuthDto(user.getId(), user.getEmail(), user.getRole().name()));
+            return ResponseEntity.ok(new AuthDto(
+                    user.getId(),
+                    user.getEmail(),
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getRole().name()));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -34,7 +39,7 @@ public class AuthController {
     @PostMapping("/signup")
     public AuthDto create(@RequestBody UserCreateDto userCreateDto) {
         User user = userService.create(userCreateDto);
-        return new AuthDto(user.getId(), user.getEmail(), user.getRole().name());
+        return new AuthDto(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getRole().name());
     }
 }
 

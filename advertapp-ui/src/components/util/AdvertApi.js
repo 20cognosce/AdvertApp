@@ -2,11 +2,11 @@ import axios from 'axios'
 import { config } from './Constants'
 
 export const advertApi = {
-    authenticate,
+    login,
     signup,
-    numberOfUsers,
-    numberOfAdverts,
-    getUsers,
+    getUsersCount,
+    getAdvertsCount,
+    getUser,
     deleteUser,
     getAdverts,
     getAdvert,
@@ -14,8 +14,8 @@ export const advertApi = {
     addAdvert
 }
 
-function authenticate(username, password) {
-    return instance.post('/auth/authenticate', { username, password }, {
+function login(email, password) {
+    return instance.post('/auth/login', { email, password }, {
         headers: { 'Content-type': 'application/json' }
     })
 }
@@ -26,15 +26,15 @@ function signup(user) {
     })
 }
 
-function numberOfUsers() {
+function getUsersCount() {
     return instance.get('/users/count')
 }
 
-function numberOfAdverts() {
+function getAdvertsCount() {
     return instance.get('/adverts/count')
 }
 
-function getUsers(user, id) {
+function getUser(user, id) {
     const url = id ? `/users/${id}` : '/users'
     return instance.get(url, {
         headers: { 'Authorization': basicAuth(user) }

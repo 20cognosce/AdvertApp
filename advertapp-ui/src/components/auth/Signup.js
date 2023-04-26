@@ -30,28 +30,29 @@ class Signup extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
+        const {firstName, lastName, email, password} = this.state
 
-        const {username, password, name, email} = this.state
-        if (!(username && password && name && email)) {
+        if (!(firstName && lastName && email && password)) {
             this.setState({
                 isError: true,
-                errorMessage: 'Please, inform all fields!'
+                errorMessage: 'Please, fill in all fields!'
             })
             return
         }
 
-        const user = {username, password, name, email}
+        const user = {firstName, lastName, email, password}
+
         advertApi.signup(user)
             .then(response => {
-                const {id, name, role} = response.data
-                const authdata = window.btoa(username + ':' + password)
-                const user = {id, name, role, authdata}
+                const {id, firstName, lastName, role} = response.data
+                const authdata = window.btoa(email + ':' + password)
+                const user = {id, firstName, lastName, role, authdata}
 
                 const Auth = this.context
                 Auth.userLogin(user)
 
                 this.setState({
-                    username: '',
+                    email: '',
                     password: '',
                     isLoggedIn: true,
                     isError: false,
@@ -89,10 +90,26 @@ class Signup extends Component {
                                 <Form.Input
                                     fluid
                                     autoFocus
-                                    name='username'
+                                    name='firstName'
                                     icon='user'
                                     iconPosition='left'
-                                    placeholder='Username'
+                                    placeholder='First name'
+                                    onChange={this.handleInputChange}
+                                />
+                                <Form.Input
+                                    fluid
+                                    name='lastName'
+                                    icon='address card'
+                                    iconPosition='left'
+                                    placeholder='Last name'
+                                    onChange={this.handleInputChange}
+                                />
+                                <Form.Input
+                                    fluid
+                                    name='email'
+                                    icon='at'
+                                    iconPosition='left'
+                                    placeholder='Email'
                                     onChange={this.handleInputChange}
                                 />
                                 <Form.Input
@@ -102,22 +119,6 @@ class Signup extends Component {
                                     iconPosition='left'
                                     placeholder='Password'
                                     type='password'
-                                    onChange={this.handleInputChange}
-                                />
-                                <Form.Input
-                                    fluid
-                                    name='name'
-                                    icon='address card'
-                                    iconPosition='left'
-                                    placeholder='Name'
-                                    onChange={this.handleInputChange}
-                                />
-                                <Form.Input
-                                    fluid
-                                    name='email'
-                                    icon='at'
-                                    iconPosition='left'
-                                    placeholder='Email'
                                     onChange={this.handleInputChange}
                                 />
                                 <Button color='blue' fluid size='large'>Signup</Button>

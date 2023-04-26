@@ -44,6 +44,6 @@ public class UserController {
     @PostMapping
     public AuthDto create(@RequestBody UserCreateDto userCreateDto) {
         User user = userService.create(userCreateDto);
-        return new AuthDto(user.getId(), user.getEmail(), user.getRole().name());
+        return new AuthDto(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getRole().name());
     }
 }

@@ -8,7 +8,6 @@ import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import AdminPage from './components/admin/AdminPage'
 import UserPage from './components/user/UserPage'
-import './components/styles/app.css'
 
 function App() {
     return (

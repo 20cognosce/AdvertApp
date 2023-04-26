@@ -1,25 +1,25 @@
 import React, {Component} from 'react'
-import {Statistic, Icon, Grid, Container, Image, Segment, Dimmer, Loader} from 'semantic-ui-react'
+import {Statistic, Icon, Grid, Container, Segment, Dimmer, Loader} from 'semantic-ui-react'
 import {advertApi} from '../util/AdvertApi'
 import {handleLogError} from '../util/ErrorHandler'
 
 class Home extends Component {
     state = {
-        numberOfUsers: 0,
-        numberOfAdverts: 0,
+        usersCount: 0,
+        advertsCount: 0,
         isLoading: false
     }
 
     async componentDidMount() {
         this.setState({isLoading: true})
         try {
-            let response = await advertApi.numberOfUsers()
-            const numberOfUsers = response.data
+            let response = await advertApi.getUsersCount()
+            const usersCount = response.data
 
-            response = await advertApi.numberOfAdverts()
-            const numberOfAdverts = response.data
+            response = await advertApi.getAdvertsCount()
+            const advertsCount = response.data
 
-            this.setState({numberOfUsers, numberOfAdverts})
+            this.setState({usersCount, advertsCount})
         } catch (error) {
             handleLogError(error)
         } finally {
@@ -38,7 +38,7 @@ class Home extends Component {
                 </Segment>
             )
         } else {
-            const {numberOfUsers, numberOfAdverts} = this.state
+            const {usersCount, advertsCount} = this.state
             return (
                 <Container text>
                     <Grid stackable columns={2}>
@@ -49,7 +49,7 @@ class Home extends Component {
                                     <Statistic size='huge'>
                                         <Statistic.Value>
                                             <Icon name='users' color='black'/>
-                                            {numberOfUsers}
+                                            {usersCount}
                                         </Statistic.Value>
                                         <br></br>
                                         <Statistic.Label>Users</Statistic.Label>
@@ -62,7 +62,7 @@ class Home extends Component {
                                     <Statistic size='huge'>
                                         <Statistic.Value>
                                             <Icon name='newspaper' color='black'/>
-                                            {numberOfAdverts}
+                                            {advertsCount}
                                         </Statistic.Value>
                                         <br></br>
                                         <Statistic.Label>Adverts</Statistic.Label>
