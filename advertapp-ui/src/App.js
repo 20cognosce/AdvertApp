@@ -7,7 +7,7 @@ import Home from './components/home/Home'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import AdminPage from './components/admin/AdminPage'
-import UserPage from './components/user/UserPage'
+import AdvertsPage from './components/adverts/AdvertsPage'
 
 function App() {
     return (
@@ -18,8 +18,8 @@ function App() {
                     <Route path='/' element={<Home/>}/>
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/signup' element={<Signup/>}/>
-                    <Route path="/adminpage" element={<PrivateRoute><AdminPage/></PrivateRoute>}/>
-                    <Route path="/userpage" element={<PrivateRoute><UserPage/></PrivateRoute>}/>
+                    <Route path="/admin" element={<PrivateRoute><AdminPage/></PrivateRoute>}/>
+                    <Route path="/adverts" element={<PrivateRoute><AdvertsPage/></PrivateRoute>}/>
                     <Route path="*" element={<Navigate to="/"/>}/>
                 </Routes>
             </Router>

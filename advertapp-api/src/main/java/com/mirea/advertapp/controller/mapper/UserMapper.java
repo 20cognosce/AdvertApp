@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ImageMapper.class, AdvertMapper.class})
 public abstract class UserMapper {
 
     public User userCreateDtoToUser(UserCreateDto userCreateDto) {

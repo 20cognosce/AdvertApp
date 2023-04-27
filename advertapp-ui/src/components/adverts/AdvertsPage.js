@@ -6,7 +6,7 @@ import AuthContext from '../auth/AuthContext'
 import {advertApi} from '../util/AdvertApi'
 import {handleLogError} from '../util/ErrorHandler'
 
-class UserPage extends Component {
+class AdvertsPage extends Component {
     static contextType = AuthContext
 
     state = {
@@ -34,7 +34,7 @@ class UserPage extends Component {
         const user = Auth.getUser()
 
         this.setState({isAdvertsLoading: true})
-        advertApi.getAdverts(user)
+        advertApi.getAllAdverts(user)
             .then(response => {
                 this.setState({adverts: response.data})
             })
@@ -82,4 +82,4 @@ class UserPage extends Component {
     }
 }
 
-export default UserPage
+export default AdvertsPage

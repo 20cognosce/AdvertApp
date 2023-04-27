@@ -63,7 +63,7 @@ class Login extends Component {
             return (
                 <Segment basic style={{marginTop: window.innerHeight / 3}}>
                     <Dimmer active inverted>
-                        <Loader inverted size='huge'>Logging in...</Loader>
+                        <Loader inverted size='huge'>Вход в систему...</Loader>
                     </Dimmer>
                 </Segment>
             )
@@ -93,16 +93,16 @@ class Login extends Component {
                                     type='password'
                                     onChange={this.handleInputChange}
                                 />
-                                <Button color='blue' fluid size='large'>Login</Button>
+                                <Button color='blue' fluid size='large'>Войти</Button>
                             </Segment>
                         </Form>
-                        <Message>{'Don\'t have already an account? '}
-                            <a href='/signup' color='teal' as={NavLink} to="/signup">Sign Up</a>
+                        <Message>{'Еще нет аккаунта? '}
+                            <a href='/signup' color='teal' as={NavLink} to="/signup">Зарегистрироваться</a>
                         </Message>
                         {
                             isError &&
                             <Message negative>
-                                The email or password provided are incorrect!
+                                Почта или пароль некорректны!
                             </Message>
                         }
                     </Grid.Column>

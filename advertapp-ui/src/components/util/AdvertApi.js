@@ -6,22 +6,17 @@ export const advertApi = {
     signup,
     getUsersCount,
     getAdvertsCount,
-    getUser,
-    deleteUser,
-    getAdverts,
-    getAdvert,
-    deleteAdvert,
-    addAdvert
-}
-
-function login(email, password) {
-    return instance.post('/auth/login', { email, password }, {
-        headers: { 'Content-type': 'application/json' }
-    })
+    getAllAdverts
 }
 
 function signup(user) {
     return instance.post('/auth/signup', user, {
+        headers: { 'Content-type': 'application/json' }
+    })
+}
+
+function login(email, password) {
+    return instance.post('/auth/login', { email, password }, {
         headers: { 'Content-type': 'application/json' }
     })
 }
@@ -34,6 +29,15 @@ function getAdvertsCount() {
     return instance.get('/adverts/count')
 }
 
+function getAllAdverts(user) {
+    const url = `/adverts`
+    return instance.get(url, {
+        headers: { 'Authorization': basicAuth(user) }
+    })
+}
+
+//-----------------------------------------------------------------------------------
+
 function getUser(user, id) {
     const url = id ? `/users/${id}` : '/users'
     return instance.get(url, {
@@ -43,13 +47,6 @@ function getUser(user, id) {
 
 function deleteUser(user, id) {
     return instance.delete(`/users/${id}`, {
-        headers: { 'Authorization': basicAuth(user) }
-    })
-}
-
-function getAdverts(user) {
-    const url = `/adverts`
-    return instance.get(url, {
         headers: { 'Authorization': basicAuth(user) }
     })
 }

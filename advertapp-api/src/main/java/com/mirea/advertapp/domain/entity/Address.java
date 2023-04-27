@@ -1,5 +1,6 @@
 package com.mirea.advertapp.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -41,6 +42,7 @@ public class Address {
     @Column(name = "house_number")
     private String houseNumber;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
     private List<Advert> adverts;
 }

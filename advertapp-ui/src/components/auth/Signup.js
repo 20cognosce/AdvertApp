@@ -93,7 +93,7 @@ class Signup extends Component {
                                     name='firstName'
                                     icon='user'
                                     iconPosition='left'
-                                    placeholder='First name'
+                                    placeholder='Имя'
                                     onChange={this.handleInputChange}
                                 />
                                 <Form.Input
@@ -101,7 +101,7 @@ class Signup extends Component {
                                     name='lastName'
                                     icon='address card'
                                     iconPosition='left'
-                                    placeholder='Last name'
+                                    placeholder='Фамилия'
                                     onChange={this.handleInputChange}
                                 />
                                 <Form.Input
@@ -109,7 +109,7 @@ class Signup extends Component {
                                     name='email'
                                     icon='at'
                                     iconPosition='left'
-                                    placeholder='Email'
+                                    placeholder='Почта'
                                     onChange={this.handleInputChange}
                                 />
                                 <Form.Input
@@ -117,15 +117,15 @@ class Signup extends Component {
                                     name='password'
                                     icon='lock'
                                     iconPosition='left'
-                                    placeholder='Password'
+                                    placeholder='Пароль'
                                     type='password'
                                     onChange={this.handleInputChange}
                                 />
-                                <Button color='blue' fluid size='large'>Signup</Button>
+                                <Button color='blue' fluid size='large'>Зарегистрироваться</Button>
                             </Segment>
                         </Form>
-                        <Message>{`Already have an account? `}
-                            <a href='/login' color='teal' as={NavLink} to="/login">Login</a>
+                        <Message>{`Уже есть аккаунт? `}
+                            <a href='/login' color='teal' as={NavLink} to="/login">Войти</a>
                         </Message>
                         {isError && <Message negative>{errorMessage}</Message>}
                     </Grid.Column>

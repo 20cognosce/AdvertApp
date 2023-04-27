@@ -1,19 +1,19 @@
 import React from 'react'
 import {Grid, Header, Form, Icon, Image, Input, Item, Segment} from 'semantic-ui-react'
 
-function AdvertList({isBooksLoading, bookTextSearch, books, handleInputChange, handleSearchBook}) {
-    let bookList
-    if (books.length === 0) {
-        bookList = <Item key='no-book'>No book</Item>
+function AdvertList({isAdvertsLoading, advertTextSearch, adverts, handleInputChange, handleSearchAdvert}) {
+    let advertsList
+    if (adverts.length === 0) {
+        advertsList = <Item key='no-advert'>Пока нет объявлений</Item>
     } else {
-        bookList = books.map(book => {
+        advertsList = adverts.map(advert => {
             return (
-                <Item key={book.isbn}>
-                    <Image src={`http://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`} size='tiny' bordered
+                <Item key={advert.id}>
+                    <Image src={`http://covers.openlibrary.org/b/isbn/${adverts.id}-M.jpg`} size='tiny' bordered
                            rounded/>
                     <Item.Content>
-                        <Item.Header>{book.title}</Item.Header>
-                        <Item.Meta>{book.isbn}</Item.Meta>
+                        <Item.Header>{advert.title}</Item.Header>
+                        <Item.Meta>{advert.id}</Item.Meta>
                         <Item.Description>
                             <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png'/>
                         </Item.Description>
@@ -24,22 +24,22 @@ function AdvertList({isBooksLoading, bookTextSearch, books, handleInputChange, h
     }
 
     return (
-        <Segment loading={isBooksLoading} color='blue'>
+        <Segment loading={isAdvertsLoading} color='blue'>
             <Grid stackable divided>
                 <Grid.Row columns='2'>
                     <Grid.Column width='3'>
                         <Header as='h2'>
                             <Icon name='book'/>
-                            <Header.Content>Books</Header.Content>
+                            <Header.Content>Объявления</Header.Content>
                         </Header>
                     </Grid.Column>
                     <Grid.Column>
-                        <Form onSubmit={handleSearchBook}>
+                        <Form onSubmit={handleSearchAdvert}>
                             <Input
                                 action={{icon: 'search'}}
-                                name='bookTextSearch'
-                                placeholder='Search by ISBN or Title'
-                                value={bookTextSearch}
+                                name='advertTestSearch'
+                                placeholder='Search by ID or Title'
+                                value={advertTextSearch}
                                 onChange={handleInputChange}
                             />
                         </Form>
@@ -47,7 +47,7 @@ function AdvertList({isBooksLoading, bookTextSearch, books, handleInputChange, h
                 </Grid.Row>
             </Grid>
             <Item.Group divided unstackable relaxed link>
-                {bookList}
+                {advertsList}
             </Item.Group>
         </Segment>
     )

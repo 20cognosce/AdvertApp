@@ -38,14 +38,14 @@ function Navbar() {
         <Menu stackable size='massive' color={'violet'} inverted>
             <Container>
                 <Menu.Item header>AdvertApp-UI</Menu.Item>
-                <Menu.Item as={Link} exact='true' to="/">Home</Menu.Item>
-                <Menu.Item as={Link} to="/adminpage" style={adminPageStyle()}>AdminPage</Menu.Item>
-                <Menu.Item as={Link} to="/userpage" style={userPageStyle()}>UserPage</Menu.Item>
+                <Menu.Item as={Link} exact='true' to="/">Домой</Menu.Item>
+                <Menu.Item as={Link} to="/admin" style={adminPageStyle()}>Администрирование</Menu.Item>
+                <Menu.Item as={Link} to="/adverts" style={userPageStyle()}>Объявления</Menu.Item>
                 <Menu.Menu position='right'>
-                    <Menu.Item as={Link} to="/login" style={enterMenuStyle()}>Login</Menu.Item>
-                    <Menu.Item as={Link} to="/signup" style={enterMenuStyle()}>Sign Up</Menu.Item>
+                    <Menu.Item as={Link} to="/login" style={enterMenuStyle()}>Вход</Menu.Item>
+                    <Menu.Item as={Link} to="/signup" style={enterMenuStyle()}>Регистрация</Menu.Item>
                     <Menu.Item header style={logoutMenuStyle()}>{`Здравствуйте, ${getUserFirstName()}`}</Menu.Item>
-                    <Menu.Item as={Link} to="/" style={logoutMenuStyle()} onClick={logout}>Logout</Menu.Item>
+                    <Menu.Item as={Link} to="/" style={logoutMenuStyle()} onClick={logout}>Выйти</Menu.Item>
                 </Menu.Menu>
             </Container>
         </Menu>

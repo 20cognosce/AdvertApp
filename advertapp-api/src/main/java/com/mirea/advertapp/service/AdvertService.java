@@ -5,6 +5,7 @@ import com.mirea.advertapp.controller.mapper.AdvertMapper;
 import com.mirea.advertapp.domain.dto.AdvertCreateDto;
 import com.mirea.advertapp.domain.dto.AdvertDto;
 import com.mirea.advertapp.domain.entity.Advert;
+import com.mirea.advertapp.domain.entity.User;
 import com.mirea.advertapp.repo.AdvertRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,12 @@ import java.util.stream.StreamSupport;
 public class AdvertService {
 
     private final AdvertRepository advertRepository;
+    private final UserService userService;
     private final AdvertMapper advertMapper;
 
     public Advert create(AdvertCreateDto advertCreateDto) {
-        Advert advert = advertMapper.advertCreateDtoToAdvert(advertCreateDto);
+        User user = userService.getById(advertCreateDto.getUserId());
+        Advert advert = advertMapper.advertCreateDtoToAdvert(advertCreateDto, user);
         return advertRepository.save(advert);
     }
 
