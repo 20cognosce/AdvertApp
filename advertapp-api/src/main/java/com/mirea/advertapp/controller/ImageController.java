@@ -24,6 +24,7 @@ public class ImageController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Resource> downloadImage(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(imageService.downloadImage(id));
+        var imageResource = imageService.downloadImage(id);
+        return ResponseEntity.ok(imageResource);
     }
 }

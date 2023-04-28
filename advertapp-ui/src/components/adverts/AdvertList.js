@@ -1,21 +1,25 @@
 import React from 'react'
 import {Grid, Header, Form, Icon, Image, Input, Item, Segment} from 'semantic-ui-react'
 
-function AdvertList({isAdvertsLoading, advertTextSearch, adverts, handleInputChange, handleSearchAdvert}) {
+function AdvertList({isAdvertsLoading, titleToSearch, adverts, handleInputChange, handleSearchAdvert}) {
     let advertsList
     if (adverts.length === 0) {
         advertsList = <Item key='no-advert'>Пока нет объявлений</Item>
     } else {
         advertsList = adverts.map(advert => {
+            let address = Object.values(advert.address)
+            address.shift()
+
             return (
                 <Item key={advert.id}>
-                    <Image src={`http://covers.openlibrary.org/b/isbn/${adverts.id}-M.jpg`} size='tiny' bordered
-                           rounded/>
+                    <Image src={`http://localhost:8080/images/${advert.images[0].id}`}
+                           size='large' bordered rounded/>
                     <Item.Content>
                         <Item.Header>{advert.title}</Item.Header>
-                        <Item.Meta>{advert.id}</Item.Meta>
+                        <Item.Meta>#{advert.id}</Item.Meta>
+                        <Item.Meta>{address.join(", ")}</Item.Meta>
                         <Item.Description>
-                            <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png'/>
+                            {advert.description}
                         </Item.Description>
                     </Item.Content>
                 </Item>
@@ -25,27 +29,30 @@ function AdvertList({isAdvertsLoading, advertTextSearch, adverts, handleInputCha
 
     return (
         <Segment loading={isAdvertsLoading} color='blue'>
-            <Grid stackable divided>
+            <Grid stackable>
                 <Grid.Row columns='2'>
-                    <Grid.Column width='3'>
-                        <Header as='h2'>
-                            <Icon name='book'/>
+                    <Grid.Column floated='left'>
+                        <Header as='h1'>
+                            <Icon name='newspaper outline'/>
                             <Header.Content>Объявления</Header.Content>
                         </Header>
                     </Grid.Column>
-                    <Grid.Column>
+
+                    <Grid.Column floated='right' width={4}>
                         <Form onSubmit={handleSearchAdvert}>
                             <Input
+                                fluid
                                 action={{icon: 'search'}}
-                                name='advertTestSearch'
-                                placeholder='Search by ID or Title'
-                                value={advertTextSearch}
+                                name='titleToSearch'
+                                placeholder='Поиск по названию'
+                                value={titleToSearch}
                                 onChange={handleInputChange}
                             />
                         </Form>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
+
             <Item.Group divided unstackable relaxed link>
                 {advertsList}
             </Item.Group>

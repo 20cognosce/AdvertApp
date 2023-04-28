@@ -11,7 +11,7 @@ class AdvertsPage extends Component {
 
     state = {
         adverts: [],
-        titleToSearch: '',
+        advertId: '',
         isUser: true,
         isAdvertsLoading: false
     }
@@ -50,9 +50,8 @@ class AdvertsPage extends Component {
         const Auth = this.context
         const user = Auth.getUser()
 
-        const title = this.state.titleToSearch
-        this.setState({isAdvertsLoading: true})
-        advertApi.searchAdvertByTitle(user, title)
+        const id = this.state.advertId
+        advertApi.getAdvertById(user, id)
             .then(response => {
                 const adverts = response.data
                 this.setState({adverts})
@@ -61,21 +60,18 @@ class AdvertsPage extends Component {
                 handleLogError(error)
                 this.setState({adverts: []})
             })
-            .finally(() => {
-                this.setState({isAdvertsLoading: false})
-            })
     }
 
     render() {
         if (!this.state.isUser) {
             return <Navigate to='/'/>
         } else {
-            const {isAdvertsLoading, adverts, titleToSearch} = this.state
+            const {isAdvertsLoading, adverts, advertId} = this.state
             return (
                 <Container>
                     <AdvertList
                         isAdvertsLoading={isAdvertsLoading}
-                        titleToSearch={titleToSearch}
+                        advertId={advertId}
                         adverts={adverts}
                         handleInputChange={this.handleInputChange}
                         handleSearchAdvert={this.handleSearchAdvert}

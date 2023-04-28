@@ -1,12 +1,13 @@
 import axios from 'axios'
-import { config } from './Constants'
+import {config} from './Constants'
 
 export const advertApi = {
     login,
     signup,
     getUsersCount,
     getAdvertsCount,
-    getAllAdverts
+    getAllAdverts,
+    searchAdvertByTitle
 }
 
 function signup(user) {
@@ -36,6 +37,13 @@ function getAllAdverts(user) {
     })
 }
 
+function searchAdvertByTitle(user, title) {
+    const url = title ? `/adverts?title=${title}` : '/adverts';
+    return instance.get(url, {
+        headers: {'Authorization': basicAuth(user)}
+    });
+}
+
 //-----------------------------------------------------------------------------------
 
 function getUser(user, id) {
@@ -47,13 +55,6 @@ function getUser(user, id) {
 
 function deleteUser(user, id) {
     return instance.delete(`/users/${id}`, {
-        headers: { 'Authorization': basicAuth(user) }
-    })
-}
-
-function getAdvert(user, id) {
-    const url = id ? `/adverts/${id}` : '/adverts'
-    return instance.get(url, {
         headers: { 'Authorization': basicAuth(user) }
     })
 }
