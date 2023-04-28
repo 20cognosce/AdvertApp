@@ -5,6 +5,7 @@ import com.mirea.advertapp.domain.entity.Advert;
 import com.mirea.advertapp.domain.entity.Image;
 import com.mirea.advertapp.repo.ImageRepository;
 import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,7 +53,7 @@ public class ImageService {
         Advert advert = advertService.getById(advertId);
 
         if (!verifyImage(image)) {
-            throw new IllegalArgumentException("File extension not specified");
+            throw new IllegalArgumentException("File extension is not supported");
         }
 
         Image imageEntity = saveImageToFileSystem(image, advert)
@@ -76,7 +77,7 @@ public class ImageService {
         String fileName = image.getOriginalFilename();
         String extensionType = Objects.requireNonNull(fileName).substring(fileName.lastIndexOf('.') + 1);
 
-        return "jpg".equals(extensionType) || "jpeg".equals(extensionType);
+        return "jpg".equals(extensionType) || "jpeg".equals(extensionType) || "png".equals(extensionType);
     }
 
     private Optional<Image> saveImageToFileSystem(MultipartFile image, Advert advert) {

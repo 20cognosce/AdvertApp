@@ -31,8 +31,16 @@ public class UserService {
 
     public User create(UserCreateDto userCreateDto) {
         User user = userMapper.userCreateDtoToUser(userCreateDto);
-        user.setHashPassword(passwordEncoder.encode(new String(userCreateDto.getPassword())));
+        user.setHashPassword(encodePassword(userCreateDto.getPassword()));
         return userRepository.save(user);
+    }
+
+    public User create(User user) {
+        return userRepository.save(user);
+    }
+
+    public String encodePassword(char[] password) {
+        return passwordEncoder.encode(new String(password));
     }
 
     public List<User> getAll() {
@@ -56,8 +64,12 @@ public class UserService {
     }
 
     public User getByEmail(String email) {
-        return userRepository.findByEmail(email)
+        return getByEmailOptional(email)
                 .orElseThrow(() -> new EntityNotFoundException("User with email " + email + " not found"));
+    }
+
+    public Optional<User> getByEmailOptional(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public UserDto convertToDto(User user) {

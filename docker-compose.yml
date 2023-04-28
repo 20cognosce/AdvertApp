@@ -3,10 +3,37 @@ version: '3.8'
 services:
   db:
     image: postgres:alpine
+    container_name: db-container
     restart: always
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: advert-db
+
+  backend:
+    build: ./advertapp-api
+    container_name: backend-container
+    restart: always
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/advert-db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      APP_CORS_ALLOWED_ORIGINS: http://frontend:3000
+    ports:
+      - '8080:8080'
+
+  frontend:
+    stdin_open: true
+    tty: true
+    build: ./advertapp-ui
+    container_name: frontend-container
+    restart: always
+    ports:
+      - '3000:3000'
+    depends_on:
+      - backend
