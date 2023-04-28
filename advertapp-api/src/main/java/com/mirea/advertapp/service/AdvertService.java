@@ -40,6 +40,12 @@ public class AdvertService {
     public AdvertDto getByIdDto(Long id) {
         return advertMapper.advertToAdvertDto(getById(id));
     }
+
+    public List<AdvertDto> searchByTitle(String title) {
+        var foundAdverts = advertRepository.findByTitleContainsIgnoreCase(title);
+        return advertMapper.advertListToAdvertDtoList(foundAdverts);
+    }
+
     public List<Advert> getAll() {
         return StreamSupport
                 .stream(advertRepository.findAll().spliterator(), false)

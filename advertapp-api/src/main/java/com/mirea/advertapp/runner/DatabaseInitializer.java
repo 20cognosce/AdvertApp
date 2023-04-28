@@ -81,7 +81,7 @@ public class DatabaseInitializer implements CommandLineRunner {
                 Распечатаем все что пожелаете!\s
                 Низкая стоимость, высокое качество, за короткие сроки.\s
                 PLA. ABS. PETG.\s
-                Звоните по номеру 8(983)-522-28-67, Алексей""";
+                Звоните по номеру 8(983)-522-28-67, Алексей.""";
         var advertDto1 = new AdvertCreateDto("Услуги печати на 3D-принтере", message1, user.getId(), address1);
 
         var address2 = Address.builder()
@@ -97,9 +97,9 @@ public class DatabaseInitializer implements CommandLineRunner {
                 Предлагаем ваш широкий ассортимент пледов, матрасов, покрывал, одеял, подушек, мягких игрушек и \s
                 иной мягкой и пушистой продукции нашей небольшой компании.\s
                 Новым клиентам скидки!\s
-                Звоните скорее! 8(800)-555-35-35""";
+                Звоните скорее! 8(800)-555-35-35.""";
         var advertDto2 = new AdvertCreateDto(
-                "Лучшее постельное белье и мягкая мебель у нас!!",
+                "Лучшее постельное белье и мягкая мебель у нас!!!",
                 message2,
                 user.getId(),
                 address2);

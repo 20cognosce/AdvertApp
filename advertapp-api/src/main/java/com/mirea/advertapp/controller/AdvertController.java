@@ -18,8 +18,12 @@ public class AdvertController {
     private final AdvertService advertService;
 
     @GetMapping
-    public List<AdvertDto> getAll() {
-        return advertService.getAllDto();
+    public List<AdvertDto> getAll(@RequestParam(value = "title", required = false) String title) {
+        if (title == null) {
+            return advertService.getAllDto();
+        } else {
+            return advertService.searchByTitle(title);
+        }
     }
 
     @GetMapping("/count")

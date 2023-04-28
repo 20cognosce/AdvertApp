@@ -44,8 +44,6 @@ class Login extends Component {
                 const user = {id, firstName, lastName, role, authdata}
 
                 const Auth = this.context
-                console.log("log: ")
-                console.log(user)
                 Auth.userLogin(user)
 
                 this.setState({email: '', password: '', isLoggedIn: true, isError: false})
