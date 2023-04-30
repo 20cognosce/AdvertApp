@@ -8,19 +8,22 @@
     Go to docker-compose.yml and put it in the variable:
     BACKEND_BASE_URI: http://{YOUR_HOST_IP}:8080
 
-    Also assure that in application.yml current profile is prod
+    Also assure that the current profile is prod in application.yml 
 
+<summary>Install docker on your system</summary>
+    <br>
+<summary>Install docker-compose</summary>
+    <br>
 
-Install docker on your system
-<br>
-Install docker-compose
+<summary>verify installation:</summary>
 
-verify installation:
 ```bash
 docker -v
 docker-compose --version
 ```
-in the project directory run:
+
+<summary>in the project directory run:</summary>
+
 ```bash
 docker-compose up
 ```
