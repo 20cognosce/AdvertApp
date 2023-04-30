@@ -1,6 +1,6 @@
 const prod = {
     url: {
-        API_BASE_URL: 'docker-compose/backend-url'
+        API_BASE_URL: process.env.REACT_APP_BACKEND_BASE_URI
     }
 }
 

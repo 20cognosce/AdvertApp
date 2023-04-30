@@ -15,4 +15,3 @@ app:
     allowed-origins: http://localhost:3000
 
 image-storage-dir: "${user.home}/static"
-project-dir: "${user.dir}"

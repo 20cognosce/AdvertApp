@@ -21,14 +21,17 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: password
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-      APP_CORS_ALLOWED_ORIGINS: http://frontend:3000
+      APP_CORS_ALLOWED_ORIGINS: http://localhost:3000,http://{YOUR_HOST_IP}:3000 # is ignored for now
     depends_on:
       - db
     ports:
       - '8080:8080'
 
   frontend:
-    build: ./advertapp-ui
+    build:
+      context: ./advertapp-ui
+      args:
+        BACKEND_BASE_URI: http://192.168.211.140:8080
     container_name: frontend-container
     restart: always
     stdin_open: true
