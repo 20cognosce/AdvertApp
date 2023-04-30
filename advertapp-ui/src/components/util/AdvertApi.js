@@ -42,6 +42,13 @@ function getImageUrlById(id) {
     return instance.getUri() + `/images/${id}`
 }
 
+function searchAdvertByTitle(user, title) {
+    const url = title ? `/adverts?title=${title}` : '/adverts';
+    return instance.get(url, {
+        headers: {'Authorization': basicAuth(user)}
+    });
+}
+
 //-----------------------------------------------------------------------------------
 
 function getUser(user, id) {
