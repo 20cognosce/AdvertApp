@@ -6,8 +6,8 @@ export const advertApi = {
     signup,
     getUsersCount,
     getAdvertsCount,
-    getAllAdverts,
-    searchAdvertByTitle
+    searchAdvertByTitle,
+    getImageUrlById
 }
 
 function signup(user) {
@@ -23,18 +23,12 @@ function login(email, password) {
 }
 
 function getUsersCount() {
+    console.log("URI: " + instance.getUri())
     return instance.get('/users/count')
 }
 
 function getAdvertsCount() {
     return instance.get('/adverts/count')
-}
-
-function getAllAdverts(user) {
-    const url = `/adverts`
-    return instance.get(url, {
-        headers: { 'Authorization': basicAuth(user) }
-    })
 }
 
 function searchAdvertByTitle(user, title) {
@@ -44,17 +38,15 @@ function searchAdvertByTitle(user, title) {
     });
 }
 
+function getImageUrlById(id) {
+    return instance.getUri() + `/images/${id}`
+}
+
 //-----------------------------------------------------------------------------------
 
 function getUser(user, id) {
     const url = id ? `/users/${id}` : '/users'
     return instance.get(url, {
-        headers: { 'Authorization': basicAuth(user) }
-    })
-}
-
-function deleteUser(user, id) {
-    return instance.delete(`/users/${id}`, {
         headers: { 'Authorization': basicAuth(user) }
     })
 }
