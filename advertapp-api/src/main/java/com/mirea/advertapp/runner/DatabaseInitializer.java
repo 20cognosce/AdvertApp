@@ -1,5 +1,6 @@
 package com.mirea.advertapp.runner;
 
+import com.mirea.advertapp.AdvertAppApplication;
 import com.mirea.advertapp.domain.dto.AdvertCreateDto;
 import com.mirea.advertapp.domain.entity.Address;
 import com.mirea.advertapp.domain.entity.Advert;
@@ -12,16 +13,12 @@ import com.mirea.advertapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.nio.file.Path;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,16 +30,8 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final UserService userService;
     private final AdvertService advertService;
     private final ImageService imageService;
-
-    private Path projectPath;
-
     private static final String ADMIN_EMAIL = "admin";
     private static final String USER_EMAIL = "user@mail.ru";
-
-    @Autowired
-    public void setProjectPath(@Value("${project-dir}") Path projectPath) {
-        this.projectPath = projectPath;
-    }
 
     @Override
     public void run(String... args) {
@@ -114,13 +103,11 @@ public class DatabaseInitializer implements CommandLineRunner {
                 .sorted(Long::compare)
                 .toList();
 
-        File printerImageFile = new File(projectPath + "/advertapp-api/src/main/resources/static/printer.png");
-        FileInputStream printerImageInput = new FileInputStream(printerImageFile);
-        MultipartFile printerImage = new MockMultipartFile("printer.png", printerImageFile.getName(), "image/png", printerImageInput);
+        InputStream printerInputStream = AdvertAppApplication.class.getClassLoader().getResourceAsStream("static/printer.png");
+        MultipartFile printerImage = new MockMultipartFile("printer.png", "printer.png", "image/png", printerInputStream);
 
-        File pillowImageFile = new File(projectPath + "/advertapp-api/src/main/resources/static/pillow.jpg");
-        FileInputStream pillowImageInput = new FileInputStream(pillowImageFile);
-        MultipartFile pillowImage = new MockMultipartFile("pillow.jpg", pillowImageFile.getName(), "image/jpg", pillowImageInput);
+        InputStream pillowInputStream = AdvertAppApplication.class.getClassLoader().getResourceAsStream("static/pillow.jpg");
+        MultipartFile pillowImage = new MockMultipartFile("pillow.jpg", "pillow.jpg", "image/jpg", pillowInputStream);
 
         imageService.uploadImage(printerImage, ids.get(0), null);
         imageService.uploadImage(pillowImage, ids.get(1), null);

@@ -23,7 +23,6 @@ function login(email, password) {
 }
 
 function getUsersCount() {
-    console.log("URI: " + instance.getUri())
     return instance.get('/users/count')
 }
 
