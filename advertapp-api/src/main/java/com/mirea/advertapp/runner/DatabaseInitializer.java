@@ -119,7 +119,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         MultipartFile printerImage = new MockMultipartFile("printer.png", printerImageFile.getName(), "image/png", printerImageInput);
 
         File pillowImageFile = new File(projectPath + "/advertapp-api/src/main/resources/static/pillow.jpg");
-        FileInputStream pillowImageInput = new FileInputStream(printerImageFile);
+        FileInputStream pillowImageInput = new FileInputStream(pillowImageFile);
         MultipartFile pillowImage = new MockMultipartFile("pillow.jpg", pillowImageFile.getName(), "image/jpg", pillowImageInput);
 
         imageService.uploadImage(printerImage, ids.get(0), null);

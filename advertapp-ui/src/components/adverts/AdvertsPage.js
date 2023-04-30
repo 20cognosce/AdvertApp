@@ -22,28 +22,15 @@ class AdvertsPage extends Component {
         const isUser = user.role === 'USER'
 
         this.setState({isUser})
-        this.handleGetAllAdverts()
+        this.handleSearchAdvert()
     }
 
     handleInputChange = (e, {name, value}) => {
         this.setState({[name]: value})
     }
 
-    handleGetAllAdverts = () => {
-        const Auth = this.context
-        const user = Auth.getUser()
-
-        this.setState({isAdvertsLoading: true})
-        advertApi.getAllAdverts(user)
-            .then(response => {
-                this.setState({adverts: response.data})
-            })
-            .catch(error => {
-                handleLogError(error)
-            })
-            .finally(() => {
-                this.setState({isAdvertsLoading: false})
-            })
+    handleGetImageUrlById = (id) => {
+        return advertApi.getImageUrlById(id);
     }
 
     handleSearchAdvert = () => {
@@ -74,11 +61,13 @@ class AdvertsPage extends Component {
             return (
                 <Container>
                     <AdvertList
-                        isAdvertsLoading={isAdvertsLoading}
-                        titleToSearch={titleToSearch}
                         adverts={adverts}
+                        titleToSearch={titleToSearch}
+                        isAdvertsLoading={isAdvertsLoading}
+
                         handleInputChange={this.handleInputChange}
                         handleSearchAdvert={this.handleSearchAdvert}
+                        handleGetImageUrlById={this.handleGetImageUrlById}
                     />
                 </Container>
             )

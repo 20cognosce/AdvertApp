@@ -1,11 +1,10 @@
-FROM node:14.18.2
-WORKDIR /advertapp-ui
-COPY  package.json ./
+FROM node:18.14.0
 
-RUN npm install
-
-COPY . /advertapp-ui
-ENV port=3000
+WORKDIR /home/advertapp-ui
+COPY . .
+RUN npm ci
+RUN npm install serve
+RUN npm run build
+ENV NODE_ENV production
 EXPOSE 3000
-
-CMD ["npm", "start"]
+CMD [ "npx", "serve", "build" ]

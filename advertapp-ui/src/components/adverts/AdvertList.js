@@ -1,18 +1,24 @@
 import React from 'react'
 import {Grid, Header, Form, Icon, Image, Input, Item, Segment} from 'semantic-ui-react'
 
-function AdvertList({isAdvertsLoading, titleToSearch, adverts, handleInputChange, handleSearchAdvert}) {
+function AdvertList({
+                        adverts,
+                        titleToSearch,
+                        isAdvertsLoading,
+                        handleInputChange,
+                        handleSearchAdvert,
+                        handleGetImageUrlById}) {
     let advertsList
     if (adverts.length === 0) {
         advertsList = <Item key='no-advert'>Пока нет объявлений</Item>
     } else {
         advertsList = adverts.map(advert => {
             let address = Object.values(advert.address)
-            address.shift()
+            address.shift() //removes id
 
             return (
                 <Item key={advert.id}>
-                    <Image src={`http://localhost:8080/images/${advert.images[0].id}`}
+                    <Image src={handleGetImageUrlById(advert.images[0].id)}
                            size='large' bordered rounded/>
                     <Item.Content>
                         <Item.Header>{advert.title}</Item.Header>
