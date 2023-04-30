@@ -10,17 +10,20 @@
 
     Also assure that in application.yml current profile is prod
 
+<summary>Install docker on your system</summary>
+    <br>
+<summary>Install docker-compose</summary>
+    <br>
 
-Install docker on your system
-<br>
-Install docker-compose
+<summary>verify installation:</summary>
 
-verify installation:
 ```bash
 docker -v
 docker-compose --version
 ```
-in the project directory run:
+
+<summary>in the project directory run:</summary>
+
 ```bash
 docker-compose up
 ```
