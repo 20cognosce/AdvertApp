@@ -8,6 +8,7 @@ import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import AdminPage from './components/admin/AdminPage'
 import AdvertsPage from './components/adverts/AdvertsPage'
+import AdvertsCreatePage from "./components/adverts/AdvertsCreatePage";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Route path='/signup' element={<Signup/>}/>
                     <Route path="/admin" element={<PrivateRoute><AdminPage/></PrivateRoute>}/>
                     <Route path="/adverts" element={<PrivateRoute><AdvertsPage/></PrivateRoute>}/>
+                    <Route path="/adverts/new" element={<PrivateRoute><AdvertsCreatePage/></PrivateRoute>}/>
                     <Route path="*" element={<Navigate to="/"/>}/>
                 </Routes>
             </Router>

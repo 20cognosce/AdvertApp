@@ -3,10 +3,10 @@ import {Grid, Header, Form, Icon, Image, Input, Item, Segment} from 'semantic-ui
 
 function AdvertList({
                         adverts,
-                        titleToSearch,
+                        advertTitleToFind,
                         isAdvertsLoading,
                         handleInputChange,
-                        handleSearchAdvert,
+                        handleFindAdverts,
                         handleGetImageUrlById}) {
     let advertsList
     if (adverts.length === 0) {
@@ -45,13 +45,13 @@ function AdvertList({
                     </Grid.Column>
 
                     <Grid.Column floated='right' width={4}>
-                        <Form onSubmit={handleSearchAdvert}>
+                        <Form onSubmit={handleFindAdverts}>
                             <Input
                                 fluid
                                 action={{icon: 'search'}}
-                                name='titleToSearch'
+                                name='advertTitleToFind'
                                 placeholder='Поиск по названию'
-                                value={titleToSearch}
+                                value={advertTitleToFind}
                                 onChange={handleInputChange}
                             />
                         </Form>

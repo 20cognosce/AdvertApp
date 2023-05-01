@@ -41,11 +41,6 @@ public class AdvertService {
         return advertMapper.advertToAdvertDto(getById(id));
     }
 
-    public List<AdvertDto> searchByTitle(String title) {
-        var foundAdverts = advertRepository.findByTitleContainsIgnoreCase(title);
-        return advertMapper.advertListToAdvertDtoList(foundAdverts);
-    }
-
     public List<Advert> getAll() {
         return StreamSupport
                 .stream(advertRepository.findAll().spliterator(), false)
@@ -55,5 +50,14 @@ public class AdvertService {
     public List<AdvertDto> getAllDto() {
         List<Advert> adverts = getAll();
         return advertMapper.advertListToAdvertDtoList(adverts);
+    }
+
+    public List<AdvertDto> findAllByTitle(String title) {
+        var foundAdverts = advertRepository.findAllByTitleContainsIgnoreCase(title);
+        return advertMapper.advertListToAdvertDtoList(foundAdverts);
+    }
+
+    public void deleteById(Long id) {
+        advertRepository.deleteById(id);
     }
 }

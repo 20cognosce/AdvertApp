@@ -4,6 +4,7 @@ import com.mirea.advertapp.domain.dto.AuthDto;
 import com.mirea.advertapp.domain.dto.UserCreateDto;
 import com.mirea.advertapp.domain.dto.UserDto;
 import com.mirea.advertapp.domain.entity.User;
+import com.mirea.advertapp.domain.entityenum.UserAccountStatus;
 import com.mirea.advertapp.security.UserDetailsImpl;
 import com.mirea.advertapp.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,11 @@ public class UserController {
         return userService.getAllDto();
     }
 
+    @GetMapping("/find")
+    public List<UserDto> findAllByEmail(@RequestParam(value = "email", required = false) String email) {
+        return userService.findAllByEmail(email);
+    }
+
     @GetMapping("/count")
     public Integer getAllCount() {
         return userService.getAll().size();
@@ -44,6 +50,21 @@ public class UserController {
     @PostMapping
     public AuthDto create(@RequestBody UserCreateDto userCreateDto) {
         User user = userService.create(userCreateDto);
-        return new AuthDto(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getRole().name());
+        return new AuthDto(user.getId(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getRole().name(),
+                user.getStatus().name());
+    }
+
+    @PostMapping("/delete/{id}")
+    public UserDto deleteUser(@PathVariable("id") Long id) {
+        return userService.setUserStatus(id, UserAccountStatus.DELETED);
+    }
+
+    @PostMapping("/activate/{id}")
+    public UserDto activateUser(@PathVariable("id") Long id) {
+        return userService.setUserStatus(id, UserAccountStatus.ACTIVE);
     }
 }

@@ -40,9 +40,16 @@ public class SpringSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/adverts/**", "/images/**", "/users/**").permitAll()
-                .requestMatchers("/users/**", "/adverts/**", "/images/**").hasAnyAuthority(ADMIN.name(), USER.name())
+                .requestMatchers(HttpMethod.GET, "/adverts/count", "/users/count", "/images/**").permitAll()
                 .requestMatchers("/", "/error").permitAll()
+
+                .requestMatchers(HttpMethod.GET, "/adverts/**").hasAnyAuthority(ADMIN.name(), USER.name())
+                .requestMatchers(HttpMethod.POST, "/adverts/**").hasAnyAuthority(ADMIN.name(), USER.name())
+
+                .requestMatchers(HttpMethod.GET,"/users/**").hasAnyAuthority(ADMIN.name())
+                .requestMatchers(HttpMethod.POST,"/users/**").permitAll() //TODO: FIXME: SHOULD BE FIXED IMMEDIATELY
+                .requestMatchers(HttpMethod.DELETE,"/adverts/**").hasAnyAuthority(ADMIN.name())
+
                 .anyRequest().authenticated()
                 .and()
                 .csrf(AbstractHttpConfigurer::disable) //TODO: should be fixed in the future
@@ -58,9 +65,8 @@ public class SpringSecurityConfiguration {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        //TODO: should be fixed in the future
+        //TODO: should be fixed in the future by adding a proxy-server like Nginx
         //var allowedOrigins = Arrays.asList(allowedOriginsLine.split(","));
-        //config.setAllowedOriginPatterns(allowedOrigins);
         config.setAllowCredentials(true);
         config.setAllowedOriginPatterns(Collections.singletonList("*"));
         config.addAllowedMethod("*");

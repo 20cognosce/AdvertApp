@@ -1,6 +1,7 @@
 package com.mirea.advertapp.security;
 
 import com.mirea.advertapp.domain.entity.User;
+import com.mirea.advertapp.domain.entityenum.UserAccountStatus;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,7 +39,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return user.getStatus() == UserAccountStatus.ACTIVE;
     }
 
     @Override

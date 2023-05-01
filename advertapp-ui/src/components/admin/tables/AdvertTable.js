@@ -1,22 +1,22 @@
 import React from 'react'
 import {Button, Form, Grid, Image, Input, Table} from 'semantic-ui-react'
-import BookForm from './BookForm'
+import BookForm from '../BookForm'
 
-function BookTable({
+function AdvertTable({
                        books,
                        bookIsbn,
                        bookTitle,
-                       bookTextSearch,
+                       bookTextFind,
                        handleInputChange,
                        handleAddBook,
                        handleDeleteBook,
-                       handleSearchBook
+                       handleFindBook
                    }) {
     let bookList
     if (books.length === 0) {
         bookList = (
-            <Table.Row key='no-book'>
-                <Table.Cell collapsing textAlign='center' colSpan='4'>No book</Table.Cell>
+            <Table.Row key='no-advert'>
+                <Table.Cell collapsing textAlign='center' colSpan='4'>Пока нет объявлений</Table.Cell>
             </Table.Row>
         )
     } else {
@@ -48,12 +48,12 @@ function BookTable({
             <Grid stackable divided>
                 <Grid.Row columns='2'>
                     <Grid.Column width='5'>
-                        <Form onSubmit={handleSearchBook}>
+                        <Form onSubmit={handleFindBook}>
                             <Input
                                 action={{icon: 'search'}}
-                                name='bookTextSearch'
-                                placeholder='Search by ISBN or Title'
-                                value={bookTextSearch}
+                                name='bookTextFind'
+                                placeholder='Find by ISBN or Title'
+                                value={bookTextFind}
                                 onChange={handleInputChange}
                             />
                         </Form>
@@ -85,4 +85,4 @@ function BookTable({
     )
 }
 
-export default BookTable
+export default AdvertTable

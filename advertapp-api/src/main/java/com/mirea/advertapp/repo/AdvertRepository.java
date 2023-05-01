@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface AdvertRepository extends CrudRepository<Advert, Long> {
 
-    List<Advert> findByTitleContainsIgnoreCase(String title);
+    List<Advert> findAllByTitleContainsIgnoreCase(String title);
 }

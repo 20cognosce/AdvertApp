@@ -11,7 +11,7 @@ class AdvertsPage extends Component {
 
     state = {
         adverts: [],
-        titleToSearch: '',
+        advertTitleToFind: null,
         isUser: true,
         isAdvertsLoading: false
     }
@@ -22,7 +22,7 @@ class AdvertsPage extends Component {
         const isUser = user.role === 'USER'
 
         this.setState({isUser})
-        this.handleSearchAdvert()
+        this.handleFindAdverts()
     }
 
     handleInputChange = (e, {name, value}) => {
@@ -33,13 +33,13 @@ class AdvertsPage extends Component {
         return advertApi.getImageUrlById(id);
     }
 
-    handleSearchAdvert = () => {
+    handleFindAdverts = () => {
         const Auth = this.context
         const user = Auth.getUser()
 
-        const title = this.state.titleToSearch
+        const title = this.state.advertTitleToFind
         this.setState({isAdvertsLoading: true})
-        advertApi.searchAdvertByTitle(user, title)
+        advertApi.findAdvertByTitle(user, title)
             .then(response => {
                 const adverts = response.data
                 this.setState({adverts})
@@ -57,16 +57,16 @@ class AdvertsPage extends Component {
         if (!this.state.isUser) {
             return <Navigate to='/'/>
         } else {
-            const {isAdvertsLoading, adverts, titleToSearch} = this.state
+            const {isAdvertsLoading, adverts, advertTitleToFind} = this.state
             return (
                 <Container>
                     <AdvertList
                         adverts={adverts}
-                        titleToSearch={titleToSearch}
+                        advertTitleToFind={advertTitleToFind}
                         isAdvertsLoading={isAdvertsLoading}
 
                         handleInputChange={this.handleInputChange}
-                        handleSearchAdvert={this.handleSearchAdvert}
+                        handleFindAdverts={this.handleFindAdverts}
                         handleGetImageUrlById={this.handleGetImageUrlById}
                     />
                 </Container>

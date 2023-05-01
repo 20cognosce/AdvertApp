@@ -11,14 +11,14 @@ class AdminPage extends Component {
 
     state = {
         users: [],
-        books: [],
-        bookIsbn: '',
-        bookTitle: '',
-        bookTextSearch: '',
-        userUsernameSearch: '',
+        adverts: [],
+        advertId: null,
+        advertTitle: null,
+        advertTitleToFind: null,
+        userEmailToFind: null,
         isAdmin: true,
         isUsersLoading: false,
-        isBooksLoading: false,
+        isAdvertsLoading: false,
     }
 
     componentDidMount() {
@@ -27,92 +27,98 @@ class AdminPage extends Component {
         const isAdmin = user.role === 'ADMIN'
         this.setState({isAdmin})
 
-        this.handleGetUsers()
-        this.handleGetBooks()
+        this.handleFindUsers()
+        this.handleFindAdverts()
     }
 
     handleInputChange = (e, {name, value}) => {
         this.setState({[name]: value})
     }
 
-    handleGetUsers = () => {
+    handleFindUsers = () => {
         const Auth = this.context
         const user = Auth.getUser()
 
+        const email = this.state.userEmailToFind
         this.setState({isUsersLoading: true})
-        advertApi.getUsers(user)
+        advertApi.findUsersByEmail(user, email)
             .then(response => {
                 this.setState({users: response.data})
             })
             .catch(error => {
                 handleLogError(error)
+                this.setState({users: []})
             })
             .finally(() => {
                 this.setState({isUsersLoading: false})
-            })
+        })
     }
 
-    handleDeleteUser = (username) => {
+    handleFindAdverts = () => {
         const Auth = this.context
         const user = Auth.getUser()
 
-        advertApi.deleteUser(user, username)
+        const title = this.state.advertTitleToFind
+        this.setState({isAdvertsLoading: true})
+        advertApi.findAdvertByTitle(user, title)
+            .then(response => {
+                this.setState({adverts: response.data})
+            })
+            .catch(error => {
+                handleLogError(error)
+                this.setState({adverts: []})
+            })
+            .finally(() => {
+                this.setState({isAdvertsLoading: false})
+            })
+    }
+
+    handleDeleteUser = (id) => {
+        const Auth = this.context
+        const user = Auth.getUser()
+
+        advertApi.deleteUser(user, id)
             .then(() => {
-                this.handleGetUsers()
-            })
-            .catch(error => {
-                handleLogError(error)
-            })
-    }
-
-    handleSearchUser = () => {
-        const Auth = this.context
-        const user = Auth.getUser()
-
-        const username = this.state.userUsernameSearch
-        advertApi.getUsers(user, username)
-            .then(response => {
-                const data = response.data
-                const users = data instanceof Array ? data : [data]
-                this.setState({users})
-            })
-            .catch(error => {
-                handleLogError(error)
-                this.setState({users: []})
-            })
-    }
-
-    handleGetBooks = () => {
-        const Auth = this.context
-        const user = Auth.getUser()
-
-        this.setState({isBooksLoading: true})
-        advertApi.getBooks(user)
-            .then(response => {
-                this.setState({books: response.data})
+                this.handleFindUsers()
             })
             .catch(error => {
                 handleLogError(error)
             })
             .finally(() => {
-                this.setState({isBooksLoading: false})
+                this.handleFindUsers()
             })
     }
 
-    handleDeleteBook = (isbn) => {
+    handleActivateUser = (id) => {
         const Auth = this.context
         const user = Auth.getUser()
 
-        advertApi.deleteBook(user, isbn)
+        advertApi.activateUser(user, id)
             .then(() => {
-                this.handleGetBooks()
+                this.handleFindUsers()
+            })
+            .catch(error => {
+                handleLogError(error)
+            })
+            .finally(() => {
+                this.handleFindUsers()
+            })
+    }
+
+    handleDeleteAdvert = (id) => {
+        const Auth = this.context
+        const user = Auth.getUser()
+
+        advertApi.deleteAdvert(user, id)
+            .then(() => {
+                this.handleFindAdverts()
             })
             .catch(error => {
                 handleLogError(error)
             })
     }
 
-    handleAddBook = () => {
+    handleCreateAdvert = () => {
         const Auth = this.context
         const user = Auth.getUser()
 
@@ -134,26 +140,10 @@ class AdminPage extends Component {
             })
     }
 
-    handleSearchBook = () => {
-        const Auth = this.context
-        const user = Auth.getUser()
-
-        const text = this.state.bookTextSearch
-        advertApi.getBooks(user, text)
-            .then(response => {
-                const books = response.data
-                this.setState({books})
-            })
-            .catch(error => {
-                handleLogError(error)
-                this.setState({books: []})
-            })
-    }
-
-    clearBookForm = () => {
+    clearAdvertForm = () => {
         this.setState({
-            bookIsbn: '',
-            bookTitle: ''
+            advertId: null,
+            advertTitle: null
         })
     }
 
@@ -162,33 +152,36 @@ class AdminPage extends Component {
             return <Navigate to='/'/>
         } else {
             const {
-                isUsersLoading,
                 users,
-                userUsernameSearch,
-                isBooksLoading,
-                books,
-                bookIsbn,
-                bookTitle,
-                bookTextSearch
+                adverts,
+                advertId,
+                advertTitle,
+                advertTitleToFind,
+                userEmailToFind,
+                isUsersLoading,
+                isAdvertsLoading
             } = this.state
             return (
                 <Container>
                     <AdminTab
+                        handleInputChange={this.handleInputChange}
+
                         isUsersLoading={isUsersLoading}
                         users={users}
-                        userUsernameSearch={userUsernameSearch}
+                        userEmailToFind={userEmailToFind}
+                        handleFindUsers={this.handleFindUsers}
                         handleDeleteUser={this.handleDeleteUser}
-                        handleSearchUser={this.handleSearchUser}
-                        isBooksLoading={isBooksLoading}
-                        books={books}
-                        bookIsbn={bookIsbn}
-                        bookTitle={bookTitle}
-                        bookTextSearch={bookTextSearch}
-                        handleAddBook={this.handleAddBook}
-                        handleDeleteBook={this.handleDeleteBook}
-                        handleSearchBook={this.handleSearchBook}
-                        handleInputChange={this.handleInputChange}
-                    />
+                        handleActivateUser={this.handleActivateUser}
+
+                        isAdvertsLoading={isAdvertsLoading}
+                        adverts={adverts}
+                        advertId={advertId}
+                        advertTitle={advertTitle}
+                        advertTitleToFind={advertTitleToFind}
+                        handleFindAdverts={this.handleFindAdverts}
+                        handleCreateAdvert={this.handleCreateAdvert}
+                        handleDeleteAdvert={this.handleDeleteAdvert}
+                        />
                 </Container>
             )
         }

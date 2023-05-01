@@ -5,6 +5,7 @@ import com.mirea.advertapp.controller.mapper.UserMapper;
 import com.mirea.advertapp.domain.dto.UserCreateDto;
 import com.mirea.advertapp.domain.dto.UserDto;
 import com.mirea.advertapp.domain.entity.User;
+import com.mirea.advertapp.domain.entityenum.UserAccountStatus;
 import com.mirea.advertapp.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,6 +55,11 @@ public class UserService {
         return userMapper.userListToUserDtoList(users);
     }
 
+    public List<UserDto> findAllByEmail(String email) {
+        var foundUsers = userRepository.findAllByEmailContainsIgnoreCase(email);
+        return userMapper.userListToUserDtoList(foundUsers);
+    }
+
     public User getById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User with id = " + id + " not found"));
@@ -87,5 +93,12 @@ public class UserService {
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    public UserDto setUserStatus(Long id, UserAccountStatus status) {
+        var user = getById(id);
+        user.setStatus(status);
+        userRepository.save(user);
+        return getByIdDto(id);
     }
 }
