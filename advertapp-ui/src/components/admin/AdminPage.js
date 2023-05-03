@@ -12,10 +12,10 @@ class AdminPage extends Component {
     state = {
         users: [],
         adverts: [],
-        advertId: null,
-        advertTitle: null,
-        advertTitleToFind: null,
-        userEmailToFind: null,
+        advertId: '',
+        advertTitle: '',
+        advertTitleToFind: '',
+        userEmailToFind: '',
         isAdmin: true,
         isUsersLoading: false,
         isAdvertsLoading: false,
@@ -101,6 +101,10 @@ class AdminPage extends Component {
             })
     }
 
+    handleGetImageUrlById = (id) => {
+        return advertApi.getImageUrlById(id);
+    }
+
     handleDeleteAdvert = (id) => {
         const Auth = this.context
         const user = Auth.getUser()
@@ -175,6 +179,7 @@ class AdminPage extends Component {
                         advertTitle={advertTitle}
                         advertTitleToFind={advertTitleToFind}
                         handleFindAdverts={this.handleFindAdverts}
+                        handleGetImageUrlById={this.handleGetImageUrlById}
                         handleCreateAdvert={this.handleCreateAdvert}
                         handleDeleteAdvert={this.handleDeleteAdvert}
                         />

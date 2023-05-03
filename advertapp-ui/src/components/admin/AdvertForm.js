@@ -1,21 +1,21 @@
 import React from 'react'
 import {Button, Form, Icon} from 'semantic-ui-react'
 
-function AdvertForm({advertId, advertTitle, handleInputChange, handleAddBook}) {
+function AdvertForm({advertId, advertTitle, handleInputChange, handleCreateAdvert}) {
     const createBtnDisabled = advertId.trim() === '' || advertTitle.trim() === ''
     return (
-        <Form onSubmit={handleAddBook}>
+        <Form onSubmit={handleCreateAdvert}>
             <Form.Group>
                 <Form.Input
-                    name='bookIsbn'
-                    placeholder='ISBN *'
+                    name='advertId'
+                    placeholder='ID *'
                     value={advertId}
                     onChange={handleInputChange}
                 />
                 <Form.Input
-                    name='bookTitle'
+                    name='advertTitle'
                     placeholder='Title *'
-                    value={advertId}
+                    value={advertTitle}
                     onChange={handleInputChange}
                 />
                 <Button icon labelPosition='right' disabled={createBtnDisabled}>

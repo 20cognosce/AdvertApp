@@ -1,43 +1,43 @@
 import React from 'react'
 import {Button, Form, Grid, Image, Input, Table} from 'semantic-ui-react'
-import BookForm from '../BookForm'
+import AdvertForm from "../AdvertForm";
 
 function AdvertTable({
-                       books,
-                       bookIsbn,
-                       bookTitle,
-                       bookTextFind,
-                       handleInputChange,
-                       handleAddBook,
-                       handleDeleteBook,
-                       handleFindBook
-                   }) {
-    let bookList
-    if (books.length === 0) {
-        bookList = (
+                         handleInputChange,
+                         adverts,
+                         advertId,
+                         advertTitle,
+                         advertTitleToFind,
+                         handleFindAdverts,
+                         handleGetImageUrlById,
+                         handleCreateAdvert,
+                         handleDeleteAdvert}) {
+    let advertList
+    if (adverts.length === 0) {
+        advertList = (
             <Table.Row key='no-advert'>
                 <Table.Cell collapsing textAlign='center' colSpan='4'>Пока нет объявлений</Table.Cell>
             </Table.Row>
         )
     } else {
-        bookList = books.map(book => {
+        advertList = adverts.map(advert => {
             return (
-                <Table.Row key={book.isbn}>
+                <Table.Row key={advert.id}>
                     <Table.Cell collapsing>
                         <Button
                             circular
                             color='red'
                             size='small'
                             icon='trash'
-                            onClick={() => handleDeleteBook(book.isbn)}
+                            onClick={() => handleDeleteAdvert(advert.id)}
                         />
                     </Table.Cell>
                     <Table.Cell>
-                        <Image src={`http://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`} size='tiny' bordered
+                        <Image src={handleGetImageUrlById(advert.images[0].id)} size='tiny' bordered
                                rounded/>
                     </Table.Cell>
-                    <Table.Cell>{book.isbn}</Table.Cell>
-                    <Table.Cell>{book.title}</Table.Cell>
+                    <Table.Cell>{advert.id}</Table.Cell>
+                    <Table.Cell>{advert.title}</Table.Cell>
                 </Table.Row>
             )
         })
@@ -48,22 +48,22 @@ function AdvertTable({
             <Grid stackable divided>
                 <Grid.Row columns='2'>
                     <Grid.Column width='5'>
-                        <Form onSubmit={handleFindBook}>
+                        <Form onSubmit={handleFindAdverts}>
                             <Input
                                 action={{icon: 'search'}}
-                                name='bookTextFind'
-                                placeholder='Find by ISBN or Title'
-                                value={bookTextFind}
+                                name='advertTitleToFind'
+                                placeholder='Поиск по заголовку'
+                                value={advertTitleToFind}
                                 onChange={handleInputChange}
                             />
                         </Form>
                     </Grid.Column>
                     <Grid.Column>
-                        <BookForm
-                            bookIsbn={bookIsbn}
-                            bookTitle={bookTitle}
+                        <AdvertForm
+                            advertId={advertId}
+                            advertTitle={advertTitle}
                             handleInputChange={handleInputChange}
-                            handleAddBook={handleAddBook}
+                            handleCreateAdvert={handleCreateAdvert}
                         />
                     </Grid.Column>
                 </Grid.Row>
@@ -73,12 +73,12 @@ function AdvertTable({
                     <Table.Row>
                         <Table.HeaderCell width={1}/>
                         <Table.HeaderCell width={3}>Cover</Table.HeaderCell>
-                        <Table.HeaderCell width={4}>ISBN</Table.HeaderCell>
+                        <Table.HeaderCell width={4}>ID</Table.HeaderCell>
                         <Table.HeaderCell width={8}>Title</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                    {bookList}
+                    {advertList}
                 </Table.Body>
             </Table>
         </>

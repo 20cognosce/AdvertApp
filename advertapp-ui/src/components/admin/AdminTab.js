@@ -20,6 +20,7 @@ function AdminTab(props) {
         advertTitle,
         advertTitleToFind,
         handleFindAdverts,
+        handleGetImageUrlById,
         handleCreateAdvert,
         handleDeleteAdvert
     } = props
@@ -51,6 +52,7 @@ function AdminTab(props) {
                         advertTitle={advertTitle}
                         advertTitleToFind={advertTitleToFind}
                         handleFindAdverts={handleFindAdverts}
+                        handleGetImageUrlById={handleGetImageUrlById}
                         handleCreateAdvert={handleCreateAdvert}
                         handleDeleteAdvert={handleDeleteAdvert}
                     />
