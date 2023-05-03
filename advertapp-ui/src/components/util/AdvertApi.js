@@ -66,13 +66,13 @@ function findUsersByEmail(user, email) {
 }
 
 function deleteUser(user, id) {
-    return instance.post(`/users/delete/${id}`, {
+    return instance.post(`/users/delete/${id}`, null, {
         headers: { 'Authorization': basicAuth(user) }
     })
 }
 
 function activateUser(user, id) {
-    return instance.post(`/users/activate/${id}`, {
+    return instance.post(`/users/activate/${id}`, null,{
         headers: { 'Authorization': basicAuth(user) }
     })
 }

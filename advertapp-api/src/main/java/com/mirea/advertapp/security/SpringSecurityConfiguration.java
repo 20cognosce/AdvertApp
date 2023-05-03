@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,18 +42,18 @@ public class SpringSecurityConfiguration {
                 .requestMatchers(HttpMethod.GET, "/adverts/count", "/users/count", "/images/**").permitAll()
                 .requestMatchers("/", "/error").permitAll()
 
-                .requestMatchers(HttpMethod.GET, "/adverts/**").hasAnyAuthority(ADMIN.name(), USER.name())
                 .requestMatchers(HttpMethod.POST, "/adverts/**").hasAnyAuthority(ADMIN.name(), USER.name())
+                .requestMatchers(HttpMethod.GET, "/adverts/**").hasAnyAuthority(ADMIN.name(), USER.name())
 
-                .requestMatchers(HttpMethod.GET,"/users/**").hasAnyAuthority(ADMIN.name())
-                .requestMatchers(HttpMethod.POST,"/users/**").permitAll() //TODO: FIXME: SHOULD BE FIXED IMMEDIATELY
-                .requestMatchers(HttpMethod.DELETE,"/adverts/**").hasAnyAuthority(ADMIN.name())
+                .requestMatchers(HttpMethod.POST,"/users/**").hasAuthority(ADMIN.name())
+                .requestMatchers(HttpMethod.GET,"/users/**").hasAuthority(ADMIN.name())
+                .requestMatchers(HttpMethod.DELETE,"/adverts/**").hasAuthority(ADMIN.name())
 
                 .anyRequest().authenticated()
                 .and()
-                .csrf(AbstractHttpConfigurer::disable) //TODO: should be fixed in the future
                 .cors()
                 .and()
+                .csrf().disable() //TODO: should be fixed in the future
                 .httpBasic();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         return http.build();

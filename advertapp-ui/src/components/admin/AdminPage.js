@@ -77,6 +77,7 @@ class AdminPage extends Component {
         const Auth = this.context
         const user = Auth.getUser()
 
+        this.setState({isUsersLoading: true})
         advertApi.deleteUser(user, id)
             .then(() => {
                 this.handleFindUsers()
@@ -84,24 +85,19 @@ class AdminPage extends Component {
             .catch(error => {
                 handleLogError(error)
             })
-            .finally(() => {
-                this.handleFindUsers()
-            })
     }
 
     handleActivateUser = (id) => {
         const Auth = this.context
         const user = Auth.getUser()
 
+        this.setState({isUsersLoading: true})
         advertApi.activateUser(user, id)
             .then(() => {
                 this.handleFindUsers()
             })
             .catch(error => {
                 handleLogError(error)
-            })
-            .finally(() => {
-                this.handleFindUsers()
             })
     }
 
