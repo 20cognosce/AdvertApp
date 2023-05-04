@@ -7,8 +7,10 @@ import com.mirea.advertapp.domain.dto.AdvertDto;
 import com.mirea.advertapp.domain.entity.Advert;
 import com.mirea.advertapp.domain.entity.User;
 import com.mirea.advertapp.repo.AdvertRepository;
+import com.mirea.advertapp.repo.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +21,7 @@ import java.util.stream.StreamSupport;
 public class AdvertService {
 
     private final AdvertRepository advertRepository;
+    private final ImageRepository imageRepository;
     private final UserService userService;
     private final AdvertMapper advertMapper;
 
@@ -57,7 +60,14 @@ public class AdvertService {
         return advertMapper.advertListToAdvertDtoList(foundAdverts);
     }
 
+    @Transactional
     public void deleteById(Long id) {
+        var advert = getById(id);
+        imageRepository.deleteAll(advert.getImages());
         advertRepository.deleteById(id);
+
+        if (advertRepository.countById(id) != 0) {
+            throw new IllegalArgumentException("Advert with id = " + id + " was not deleted");
+        }
     }
 }

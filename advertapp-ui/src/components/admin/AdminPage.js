@@ -12,8 +12,6 @@ class AdminPage extends Component {
     state = {
         users: [],
         adverts: [],
-        advertId: '',
-        advertTitle: '',
         advertTitleToFind: '',
         userEmailToFind: '',
         isAdmin: true,
@@ -109,6 +107,7 @@ class AdminPage extends Component {
         const Auth = this.context
         const user = Auth.getUser()
 
+        this.setState({isAdvertsLoading: true})
         advertApi.deleteAdvert(user, id)
             .then(() => {
                 this.handleFindAdverts()
@@ -118,35 +117,6 @@ class AdminPage extends Component {
             })
     }
 
-    handleCreateAdvert = () => {
-        const Auth = this.context
-        const user = Auth.getUser()
-
-        let {bookIsbn, bookTitle} = this.state
-        bookIsbn = bookIsbn.trim()
-        bookTitle = bookTitle.trim()
-        if (!(bookIsbn && bookTitle)) {
-            return
-        }
-
-        const book = {isbn: bookIsbn, title: bookTitle}
-        advertApi.addBook(user, book)
-            .then(() => {
-                this.clearBookForm()
-                this.handleGetBooks()
-            })
-            .catch(error => {
-                handleLogError(error)
-            })
-    }
-
-    clearAdvertForm = () => {
-        this.setState({
-            advertId: null,
-            advertTitle: null
-        })
-    }
-
     render() {
         if (!this.state.isAdmin) {
             return <Navigate to='/'/>
@@ -154,8 +124,6 @@ class AdminPage extends Component {
             const {
                 users,
                 adverts,
-                advertId,
-                advertTitle,
                 advertTitleToFind,
                 userEmailToFind,
                 isUsersLoading,
@@ -175,12 +143,9 @@ class AdminPage extends Component {
 
                         isAdvertsLoading={isAdvertsLoading}
                         adverts={adverts}
-                        advertId={advertId}
-                        advertTitle={advertTitle}
                         advertTitleToFind={advertTitleToFind}
                         handleFindAdverts={this.handleFindAdverts}
                         handleGetImageUrlById={this.handleGetImageUrlById}
-                        handleCreateAdvert={this.handleCreateAdvert}
                         handleDeleteAdvert={this.handleDeleteAdvert}
                         />
                 </Container>

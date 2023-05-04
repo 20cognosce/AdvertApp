@@ -1,16 +1,12 @@
 import React from 'react'
 import {Button, Form, Grid, Image, Input, Table} from 'semantic-ui-react'
-import AdvertForm from "../AdvertForm";
 
 function AdvertTable({
                          handleInputChange,
                          adverts,
-                         advertId,
-                         advertTitle,
                          advertTitleToFind,
                          handleFindAdverts,
                          handleGetImageUrlById,
-                         handleCreateAdvert,
                          handleDeleteAdvert}) {
     let advertList
     if (adverts.length === 0) {
@@ -33,11 +29,14 @@ function AdvertTable({
                         />
                     </Table.Cell>
                     <Table.Cell>
-                        <Image src={handleGetImageUrlById(advert.images[0].id)} size='tiny' bordered
+                        <Image src={handleGetImageUrlById(advert.images[0].id)} size='small' bordered
                                rounded/>
                     </Table.Cell>
                     <Table.Cell>{advert.id}</Table.Cell>
+                    <Table.Cell>{advert.userId}</Table.Cell>
+                    <Table.Cell>{advert.published}</Table.Cell>
                     <Table.Cell>{advert.title}</Table.Cell>
+                    <Table.Cell>{advert.description}</Table.Cell>
                 </Table.Row>
             )
         })
@@ -58,23 +57,18 @@ function AdvertTable({
                             />
                         </Form>
                     </Grid.Column>
-                    <Grid.Column>
-                        <AdvertForm
-                            advertId={advertId}
-                            advertTitle={advertTitle}
-                            handleInputChange={handleInputChange}
-                            handleCreateAdvert={handleCreateAdvert}
-                        />
-                    </Grid.Column>
                 </Grid.Row>
             </Grid>
             <Table compact striped selectable>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell width={1}/>
-                        <Table.HeaderCell width={3}>Cover</Table.HeaderCell>
-                        <Table.HeaderCell width={4}>ID</Table.HeaderCell>
-                        <Table.HeaderCell width={8}>Title</Table.HeaderCell>
+                        <Table.HeaderCell width={2}>Image</Table.HeaderCell>
+                        <Table.HeaderCell width={1}>ID</Table.HeaderCell>
+                        <Table.HeaderCell width={1}>UserID</Table.HeaderCell>
+                        <Table.HeaderCell width={2}>Published</Table.HeaderCell>
+                        <Table.HeaderCell width={4}>Title</Table.HeaderCell>
+                        <Table.HeaderCell width={8}>Description</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>

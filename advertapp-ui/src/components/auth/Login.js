@@ -79,7 +79,7 @@ class Login extends Component {
                                     name='email'
                                     icon='at'
                                     iconPosition='left'
-                                    placeholder='Email'
+                                    placeholder='Почта'
                                     onChange={this.handleInputChange}
                                 />
                                 <Form.Input
@@ -87,7 +87,7 @@ class Login extends Component {
                                     name='password'
                                     icon='lock'
                                     iconPosition='left'
-                                    placeholder='Password'
+                                    placeholder='Пароль'
                                     type='password'
                                     onChange={this.handleInputChange}
                                 />

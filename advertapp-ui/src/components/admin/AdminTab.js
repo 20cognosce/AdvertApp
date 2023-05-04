@@ -16,12 +16,9 @@ function AdminTab(props) {
     const {
         isAdvertsLoading,
         adverts,
-        advertId,
-        advertTitle,
         advertTitleToFind,
         handleFindAdverts,
         handleGetImageUrlById,
-        handleCreateAdvert,
         handleDeleteAdvert
     } = props
 
@@ -48,12 +45,9 @@ function AdminTab(props) {
                     <AdvertTable
                         handleInputChange={handleInputChange}
                         adverts={adverts}
-                        advertId={advertId}
-                        advertTitle={advertTitle}
                         advertTitleToFind={advertTitleToFind}
                         handleFindAdverts={handleFindAdverts}
                         handleGetImageUrlById={handleGetImageUrlById}
-                        handleCreateAdvert={handleCreateAdvert}
                         handleDeleteAdvert={handleDeleteAdvert}
                     />
                 </Tab.Pane>

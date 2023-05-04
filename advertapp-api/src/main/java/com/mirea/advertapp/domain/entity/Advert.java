@@ -39,4 +39,10 @@ public class Advert {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "advert", cascade = CascadeType.ALL)
     private List<Image> images;
+
+    @PreRemove
+    private void dismissUser() {
+        this.user.getAdverts().remove(this);
+        this.user = null;
+    }
 }

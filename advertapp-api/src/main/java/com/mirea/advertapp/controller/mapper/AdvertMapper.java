@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = ImageMapper.class)
@@ -21,7 +22,8 @@ public abstract class AdvertMapper {
         return Advert.builder()
                 .title(advertCreateDto.getTitle())
                 .description(advertCreateDto.getDescription())
-                .published(LocalDateTime.now())
+                .published(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .updated(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .address(advertCreateDto.getAddress())
                 .user(user)
                 .build();

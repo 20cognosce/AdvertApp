@@ -35,7 +35,7 @@ class Signup extends Component {
         if (!(firstName && lastName && email && password)) {
             this.setState({
                 isError: true,
-                errorMessage: 'Please, fill in all fields!'
+                errorMessage: 'Пожалуйста, заполните все поля!'
             })
             return
         }
@@ -63,7 +63,7 @@ class Signup extends Component {
                 handleLogError(error)
                 if (error.response && error.response.data) {
                     const errorData = error.response.data
-                    let errorMessage = 'Invalid fields'
+                    let errorMessage = 'Некорректные поля'
                     if (errorData.status === 409) {
                         errorMessage = errorData.message
                     } else if (errorData.status === 400) {

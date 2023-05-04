@@ -1,14 +1,18 @@
 import React, {Component} from 'react'
 import {Navigate, NavLink} from 'react-router-dom'
-import {Button, Container, Form, Grid, Message, Segment} from 'semantic-ui-react'
+import {Button, Container, Form, Grid, Input, Message, Segment, Table} from 'semantic-ui-react'
 import AuthContext from '../auth/AuthContext'
 import {advertApi} from "../util/AdvertApi";
 import {handleLogError} from "../util/ErrorHandler";
+import AdvertForm from "./AdvertForm";
 
 class AdvertsCreatePage extends Component {
     static contextType = AuthContext
 
     state = {
+        advertId,
+        advertTitle,
+
         title: '',
         description: '',
         userId: null,
@@ -81,8 +85,68 @@ class AdvertsCreatePage extends Component {
             })
     }
 
+
+    handleCreateAdvert = () => {
+        const Auth = this.context
+        const user = Auth.getUser()
+
+        let {bookIsbn, bookTitle} = this.state
+        bookIsbn = bookIsbn.trim()
+        bookTitle = bookTitle.trim()
+        if (!(bookIsbn && bookTitle)) {
+            return
+        }
+
+        const book = {isbn: bookIsbn, title: bookTitle}
+        advertApi.addBook(user, book)
+            .then(() => {
+                this.clearBookForm()
+                this.handleGetBooks()
+            })
+            .catch(error => {
+                handleLogError(error)
+            })
+    }
+
+    clearAdvertForm = () => {
+        this.setState({
+            advertId: null,
+            advertTitle: null
+        })
+    }
+
     render() {
         const {isUser, userId, isError, errorMessage} = this.state
+
+        return (
+            <>
+                <Grid stackable divided>
+                    <Grid.Row columns='2'>
+                        <Grid.Column width='5'>
+                            <AdvertForm
+                                advertId={advertId}
+                                advertTitle={advertTitle}
+                                handleInputChange={handleInputChange}
+                                handleCreateAdvert={handleCreateAdvert}
+                            />
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+                <Table compact striped selectable>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell width={1}/>
+                            <Table.HeaderCell width={3}>Cover</Table.HeaderCell>
+                            <Table.HeaderCell width={4}>ID</Table.HeaderCell>
+                            <Table.HeaderCell width={8}>Title</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {advertList}
+                    </Table.Body>
+                </Table>
+            </>
+        )
 
         if (!isUser) {
             return <Navigate to='/'/>
