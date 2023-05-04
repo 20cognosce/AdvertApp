@@ -14,7 +14,8 @@ export const advertApi = {
 
     deleteUser,
     activateUser,
-    deleteAdvert
+    deleteAdvert,
+    createAdvert
 }
 
 function signup(user) {
@@ -82,8 +83,6 @@ function deleteAdvert(user, id) {
         headers: { 'Authorization': basicAuth(user) }
     })
 }
-
-//-----------------------------------------------------------------------------------
 
 function createAdvert(user, advert) {
     return instance.post('/adverts', advert, {

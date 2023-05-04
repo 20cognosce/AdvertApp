@@ -29,8 +29,9 @@ function AdvertTable({
                         />
                     </Table.Cell>
                     <Table.Cell>
-                        <Image src={handleGetImageUrlById(advert.images[0].id)} size='small' bordered
-                               rounded/>
+                        { (advert.images.length > 0) &&
+                            <Image src={handleGetImageUrlById(advert.images[0].id)} size='medium' bordered rounded/>
+                        }
                     </Table.Cell>
                     <Table.Cell>{advert.id}</Table.Cell>
                     <Table.Cell>{advert.userId}</Table.Cell>

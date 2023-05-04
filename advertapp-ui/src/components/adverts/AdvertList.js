@@ -1,5 +1,5 @@
 import React from 'react'
-import {Grid, Header, Form, Icon, Image, Input, Item, Segment} from 'semantic-ui-react'
+import {Form, Grid, Header, Icon, Image, Input, Item, Segment} from 'semantic-ui-react'
 
 function AdvertList({
                         adverts,
@@ -15,11 +15,13 @@ function AdvertList({
         advertsList = adverts.map(advert => {
             let address = Object.values(advert.address)
             address.shift() //removes id
+            console.log(advert.images)
 
             return (
                 <Item key={advert.id}>
-                    <Image src={handleGetImageUrlById(advert.images[0].id)}
-                           size='large' bordered rounded/>
+                    { (advert.images.length > 0) &&
+                        <Image src={handleGetImageUrlById(advert.images[0].id)} size='large' bordered rounded/>
+                    }
                     <Item.Content>
                         <Item.Header>{advert.title}</Item.Header>
                         <Item.Meta>#{advert.id}</Item.Meta>
