@@ -58,12 +58,7 @@ class AdvertsCreatePage extends Component {
 
         this.setState({isLoading: true})
         try {
-            //const createdAdvert = await this.handleCreateAdvert()
-            const advertId = 8
-
-            if (advertId != null) {
-                await this.handleUploadImage(advertId)
-            }
+             await this.handleCreateAdvert()
         } catch(error) {
             handleLogError(error)
         } finally {
@@ -72,12 +67,15 @@ class AdvertsCreatePage extends Component {
         }
     }
 
-    handleCreateAdvert() {
+    async handleCreateAdvert() {
         const Auth = this.context
         const user = Auth.getUser()
         const advert = this.getBuiltAdvert(user.id)
 
-        return advertApi.createAdvert(user, advert)
+        await advertApi.createAdvert(user, advert)
+            .then(response => {
+                this.handleUploadImage(response.data.id)
+            })
     }
 
     handleUploadImage(advertId) {
@@ -85,7 +83,10 @@ class AdvertsCreatePage extends Component {
         const user = Auth.getUser()
         const image = this.state.image
 
-        return advertApi.uploadImage(user, image, advertId)
+        advertApi.uploadImage(user, image, advertId)
+            .then(response => {
+                return response.data
+            })
     }
 
     getBuiltAdvert = (id) => {

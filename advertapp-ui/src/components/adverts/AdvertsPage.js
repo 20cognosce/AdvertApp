@@ -11,7 +11,7 @@ class AdvertsPage extends Component {
 
     state = {
         adverts: [],
-        advertTitleToFind: null,
+        advertTitleToFind: '',
         isUser: true,
         isAdvertsLoading: false
     }
