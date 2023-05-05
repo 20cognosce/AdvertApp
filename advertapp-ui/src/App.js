@@ -11,6 +11,8 @@ import AdvertsPage from './components/adverts/AdvertsPage'
 import AdvertsCreatePage from "./components/adverts/AdvertsCreatePage";
 
 function App() {
+    document.body.style.backgroundColor = "blanchedalmond"
+
     return (
         <AuthProvider>
             <Router>

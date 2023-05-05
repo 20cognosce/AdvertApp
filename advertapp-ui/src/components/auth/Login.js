@@ -60,7 +60,7 @@ class Login extends Component {
         if (isLoading) {
             return (
                 <Segment basic style={{marginTop: window.innerHeight / 3}}>
-                    <Dimmer active inverted>
+                    <Dimmer active inverted page={true}>
                         <Loader inverted size='huge'>Вход в систему...</Loader>
                     </Dimmer>
                 </Segment>

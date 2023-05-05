@@ -15,7 +15,8 @@ export const advertApi = {
     deleteUser,
     activateUser,
     deleteAdvert,
-    createAdvert
+    createAdvert,
+    uploadImage
 }
 
 function signup(user) {
@@ -88,6 +89,20 @@ function createAdvert(user, advert) {
     return instance.post('/adverts', advert, {
         headers: {
             'Content-type': 'application/json',
+            'Authorization': basicAuth(user)
+        }
+    })
+}
+
+function uploadImage(user, imageFile, advertId) {
+    let formData = new FormData();
+    formData.append("image", imageFile)
+    formData.append("advertId", advertId)
+    formData.append("title", "")
+
+    return instance.post('/images', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
             'Authorization': basicAuth(user)
         }
     })

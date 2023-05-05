@@ -32,7 +32,7 @@ class Home extends Component {
         if (isLoading) {
             return (
                 <Segment basic style={{marginTop: window.innerHeight / 2}}>
-                    <Dimmer active inverted>
+                    <Dimmer active inverted page={true}>
                         <Loader inverted size='huge'>Loading</Loader>
                     </Dimmer>
                 </Segment>

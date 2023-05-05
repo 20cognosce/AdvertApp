@@ -13,9 +13,15 @@ function AdvertList({
         advertsList = <Item key='no-advert'>Пока нет объявлений</Item>
     } else {
         advertsList = adverts.map(advert => {
-            let address = Object.values(advert.address)
-            address.shift() //removes id
-            console.log(advert.images)
+            let addressFromDto = Object.values(advert.address)
+            addressFromDto.shift() //removes id
+            const address = [];
+
+            for (const item of addressFromDto) {
+                if (item !== '') {
+                    address.push(item);
+                }
+            }
 
             return (
                 <Item key={advert.id}>

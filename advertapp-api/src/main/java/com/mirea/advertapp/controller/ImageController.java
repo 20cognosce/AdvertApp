@@ -17,7 +17,7 @@ public class ImageController {
 
     @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE)
     public String uploadImage(@RequestBody MultipartFile image,
-                              @RequestParam("advert-id") Long advertId,
+                              @RequestParam("advertId") Long advertId,
                               @RequestParam("title") String title) {
         return imageService.uploadImage(image, advertId, title);
     }

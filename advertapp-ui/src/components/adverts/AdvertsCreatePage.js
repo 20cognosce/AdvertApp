@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Navigate} from 'react-router-dom'
-import {Button, Dimmer, Form, Grid, Loader, Message, Segment} from 'semantic-ui-react'
+import {Button, Dimmer, Form, Grid, Header, Loader, Message, Segment} from 'semantic-ui-react'
 import AuthContext from '../auth/AuthContext'
 import {advertApi} from "../util/AdvertApi";
 import {handleLogError} from "../util/ErrorHandler";
@@ -16,6 +16,7 @@ class AdvertsCreatePage extends Component {
         street: '',
         houseNumber: '',
         description: '',
+        image: null,
 
         isUser: true,
 
@@ -38,39 +39,53 @@ class AdvertsCreatePage extends Component {
         this.setState({[name]: value})
     }
 
-    handleSubmit = async (e) => {
-        e.preventDefault()
+    fileInputRef = React.createRef();
+
+    handleFileChange = e => {
+        this.setState({ image: e.target.files[0] })
+    };
+
+    handleSubmit = async () => {
         const {title, description, county, city} = this.state
 
         if (!(title && description && county && city)) {
             this.setState({
                 isError: true,
-                errorMessage: 'Пожалуйста, предоставьте как минимум заголовок, описание, область и город'
+                errorMessage: 'Пожалуйста, предоставьте как минимум заголовок, область, город и описание.'
             })
             return
         }
 
+        this.setState({isLoading: true})
+        try {
+            //const createdAdvert = await this.handleCreateAdvert()
+            const advertId = 8
+
+            if (advertId != null) {
+                await this.handleUploadImage(advertId)
+            }
+        } catch(error) {
+            handleLogError(error)
+        } finally {
+            this.setState({isLoading: false})
+            this.clear()
+        }
+    }
+
+    handleCreateAdvert() {
         const Auth = this.context
         const user = Auth.getUser()
         const advert = this.getBuiltAdvert(user.id)
 
-        this.setState({isLoading: true})
-        await advertApi.createAdvert(user, advert)
-            .then(() => {
-                this.clear()
-                this.setState({isLoading: false})
-            })
-            .catch(error => {
-                handleLogError(error)
-            })
+        return advertApi.createAdvert(user, advert)
     }
 
-    clear = () => {
-        this.setState({
-            title: '',
-            description: '',
-            address: null
-        })
+    handleUploadImage(advertId) {
+        const Auth = this.context
+        const user = Auth.getUser()
+        const image = this.state.image
+
+        return advertApi.uploadImage(user, image, advertId)
     }
 
     getBuiltAdvert = (id) => {
@@ -88,13 +103,21 @@ class AdvertsCreatePage extends Component {
         }
     }
 
+    clear = () => {
+        this.setState({
+            title: '',
+            description: '',
+            image: null
+        })
+    }
+
     render() {
         const {isLoading, isUser, isError, errorMessage} = this.state
 
         if (isLoading) {
             return (
                 <Segment basic style={{marginTop: window.innerHeight / 3}}>
-                    <Dimmer active inverted>
+                    <Dimmer active inverted page={true}>
                         <Loader inverted size='huge'>Создание объявления...</Loader>
                     </Dimmer>
                 </Segment>
@@ -105,13 +128,16 @@ class AdvertsCreatePage extends Component {
             return (
                 <Grid textAlign='center'>
                     <Grid.Column style={{maxWidth: 750}}>
-                        <Form size='large' onSubmit={this.handleSubmit}>
+                        <Form size='large' onSubmit={null}>
                             <Segment>
+                                <Header as='h2' color={"violet"} textAlign={"center"}>
+                                    Форма создания объявления
+                                </Header>
                                 <Form.Input
                                     fluid
                                     autoFocus
                                     name='title'
-                                    icon='user'
+                                    icon='paragraph'
                                     iconPosition='left'
                                     placeholder='Заголовок объявления'
                                     onChange={this.handleInputChange}
@@ -119,7 +145,7 @@ class AdvertsCreatePage extends Component {
                                 <Form.Input
                                     fluid
                                     name='county'
-                                    icon='address card'
+                                    icon='map marker alternate'
                                     iconPosition='left'
                                     placeholder='Область'
                                     onChange={this.handleInputChange}
@@ -127,7 +153,7 @@ class AdvertsCreatePage extends Component {
                                 <Form.Input
                                     fluid
                                     name='city'
-                                    icon='address card'
+                                    icon='factory'
                                     iconPosition='left'
                                     placeholder='Город'
                                     onChange={this.handleInputChange}
@@ -135,7 +161,7 @@ class AdvertsCreatePage extends Component {
                                 <Form.Input
                                     fluid
                                     name='district'
-                                    icon='address card'
+                                    icon='map'
                                     iconPosition='left'
                                     placeholder='Район'
                                     onChange={this.handleInputChange}
@@ -143,7 +169,7 @@ class AdvertsCreatePage extends Component {
                                 <Form.Input
                                     fluid
                                     name='street'
-                                    icon='address card'
+                                    icon='map signs'
                                     iconPosition='left'
                                     placeholder='Улица'
                                     onChange={this.handleInputChange}
@@ -151,26 +177,42 @@ class AdvertsCreatePage extends Component {
                                 <Form.Input
                                     fluid
                                     name='houseNumber'
-                                    icon='address card'
+                                    icon='home'
                                     iconPosition='left'
                                     placeholder='Дом'
                                     onChange={this.handleInputChange}
                                 />
                                 <Form.TextArea
-                                    fluid
                                     name='description'
                                     placeholder='Описание'
                                     onChange={this.handleInputChange}
                                 />
-                                <Form.Input
+                                <Segment style={{marginTop: "20px", marginBottom: "20px"}}>
+                                    <Button
+                                        content="Выбрать фотографию"
+                                        labelPosition="left"
+                                        icon="attach"
+                                        onClick={() => this.fileInputRef.current.click()}
+                                    />
+                                    <input
+                                        ref={this.fileInputRef}
+                                        type="file"
+                                        hidden
+                                        onChange={this.handleFileChange}
+                                    />
+                                    { (this.state.image) &&
+                                        <Message positive>Фотография прикреплена!</Message>
+                                    }
+                                </Segment>
+                                <Button
+                                    color='green'
                                     fluid
-                                    name='image'
-                                    icon='lock'
-                                    iconPosition='left'
-                                    placeholder='Картинка...'
-                                    onChange={this.handleInputChange}
-                                />
-                                <Button color='green' fluid size='huge'>Создать объявление</Button>
+                                    size='huge'
+                                    type={"button"}
+                                    onClick={() => this.handleSubmit()}
+                                >
+                                    Создать объявление
+                                </Button>
                             </Segment>
                         </Form>
 
