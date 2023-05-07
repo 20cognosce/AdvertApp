@@ -1,14 +1,6 @@
 <summary>Application pre-setup</summary>
 
-    Copy your host IPv4 address
-    
-    Windows: ipconfig
-    Linux: hostname -I
-
-    Go to docker-compose.yml and put it in the variable:
-    BACKEND_BASE_URI: http://{YOUR_HOST_IP}:8080
-
-    Also assure that the current profile is prod in application.yml 
+    Assure that the current profile is prod in application.yml 
 
 <summary>Install docker on your system</summary>
     <br>

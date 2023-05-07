@@ -60,7 +60,7 @@ class Login extends Component {
         if (isLoading) {
             return (
                 <Segment basic style={{marginTop: window.innerHeight / 3}}>
-                    <Dimmer active inverted>
+                    <Dimmer active inverted page={true}>
                         <Loader inverted size='huge'>Вход в систему...</Loader>
                     </Dimmer>
                 </Segment>
@@ -79,7 +79,7 @@ class Login extends Component {
                                     name='email'
                                     icon='at'
                                     iconPosition='left'
-                                    placeholder='Email'
+                                    placeholder='Почта'
                                     onChange={this.handleInputChange}
                                 />
                                 <Form.Input
@@ -87,7 +87,7 @@ class Login extends Component {
                                     name='password'
                                     icon='lock'
                                     iconPosition='left'
-                                    placeholder='Password'
+                                    placeholder='Пароль'
                                     type='password'
                                     onChange={this.handleInputChange}
                                 />

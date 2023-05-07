@@ -40,7 +40,7 @@ function Navbar() {
                 <Menu.Item as={Link} exact='true' to="/">Домой</Menu.Item>
                 <Menu.Item as={Link} to="/admin" style={adminPageStyle()}>Администрирование</Menu.Item>
                 <Menu.Item as={Link} to="/adverts" style={userPageStyle()}>Объявления</Menu.Item>
-                <Menu.Item as={Link} to="/adverts/new" style={userPageStyle()}>Разместить объявление</Menu.Item>
+                <Menu.Item as={Link} to="/adverts/new" style={userPageStyle()}>Разместить свое объявление</Menu.Item>
 
                 <Menu.Menu position='right'>
                     <Menu.Item as={Link} to="/login" style={enterMenuStyle()}>Вход</Menu.Item>

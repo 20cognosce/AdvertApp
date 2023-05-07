@@ -32,7 +32,7 @@ class Home extends Component {
         if (isLoading) {
             return (
                 <Segment basic style={{marginTop: window.innerHeight / 2}}>
-                    <Dimmer active inverted>
+                    <Dimmer active inverted page={true}>
                         <Loader inverted size='huge'>Loading</Loader>
                     </Dimmer>
                 </Segment>
@@ -45,7 +45,7 @@ class Home extends Component {
                         <Grid.Row style={{ flexGrow: 1 }}>
                             <Grid.Column textAlign='center'>
                                 <Segment color='blue'>
-                                    <Statistic size='massive'>
+                                    <Statistic size='huge'>
                                         <Statistic.Value>
                                             <Icon name='users' color='black'/>
                                             <span> </span>
@@ -62,7 +62,7 @@ class Home extends Component {
 
                             <Grid.Column textAlign='center'>
                                 <Segment color='blue'>
-                                    <Statistic size='massive'>
+                                    <Statistic size='huge'>
                                         <Statistic.Value>
                                             <Icon name='newspaper' color='black'/>
                                             <span> </span>

@@ -1,50 +1,54 @@
 import React from 'react'
 import {Tab} from 'semantic-ui-react'
-import UserTable from './UserTable'
-import BookTable from './BookTable'
+import UserTable from './tables/UserTable'
+import AdvertTable from './tables/AdvertTable'
 
 function AdminTab(props) {
     const {handleInputChange} = props
-    const {isUsersLoading, users, userUsernameSearch, handleDeleteUser, handleSearchUser} = props
     const {
-        isBooksLoading,
-        books,
-        bookIsbn,
-        bookTitle,
-        bookTextSearch,
-        handleAddBook,
-        handleDeleteBook,
-        handleSearchBook
+        isUsersLoading,
+        users,
+        userEmailToFind,
+        handleFindUsers,
+        handleDeleteUser,
+        handleActivateUser
+    } = props
+    const {
+        isAdvertsLoading,
+        adverts,
+        advertTitleToFind,
+        handleFindAdverts,
+        handleGetImageUrlById,
+        handleDeleteAdvert
     } = props
 
     const panes = [
         {
-            menuItem: {key: 'users', icon: 'users', content: 'Users'},
+            menuItem: {key: 'users', icon: 'users', content: 'Пользователи'},
             render: () => (
                 <Tab.Pane loading={isUsersLoading}>
                     <UserTable
-                        users={users}
-                        userUsernameSearch={userUsernameSearch}
                         handleInputChange={handleInputChange}
+                        users={users}
+                        userEmailToFind={userEmailToFind}
+                        handleFindUsers={handleFindUsers}
                         handleDeleteUser={handleDeleteUser}
-                        handleSearchUser={handleSearchUser}
+                        handleActivateUser={handleActivateUser}
                     />
                 </Tab.Pane>
             )
         },
         {
-            menuItem: {key: 'books', icon: 'book', content: 'Books'},
+            menuItem: {key: 'adverts', icon: 'newspaper', content: 'Объявления'},
             render: () => (
-                <Tab.Pane loading={isBooksLoading}>
-                    <BookTable
-                        books={books}
-                        bookIsbn={bookIsbn}
-                        bookTitle={bookTitle}
-                        bookTextSearch={bookTextSearch}
+                <Tab.Pane loading={isAdvertsLoading}>
+                    <AdvertTable
                         handleInputChange={handleInputChange}
-                        handleAddBook={handleAddBook}
-                        handleDeleteBook={handleDeleteBook}
-                        handleSearchBook={handleSearchBook}
+                        adverts={adverts}
+                        advertTitleToFind={advertTitleToFind}
+                        handleFindAdverts={handleFindAdverts}
+                        handleGetImageUrlById={handleGetImageUrlById}
+                        handleDeleteAdvert={handleDeleteAdvert}
                     />
                 </Tab.Pane>
             )

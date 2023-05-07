@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,14 +39,21 @@ public class SpringSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/adverts/**", "/images/**", "/users/**").permitAll()
-                .requestMatchers("/users/**", "/adverts/**", "/images/**").hasAnyAuthority(ADMIN.name(), USER.name())
+                .requestMatchers(HttpMethod.GET, "/adverts/count", "/users/count", "/images/**").permitAll()
                 .requestMatchers("/", "/error").permitAll()
+
+                .requestMatchers(HttpMethod.POST, "/adverts/**").hasAnyAuthority(ADMIN.name(), USER.name())
+                .requestMatchers(HttpMethod.GET, "/adverts/**").hasAnyAuthority(ADMIN.name(), USER.name())
+
+                .requestMatchers(HttpMethod.POST,"/users/**").hasAuthority(ADMIN.name())
+                .requestMatchers(HttpMethod.GET,"/users/**").hasAuthority(ADMIN.name())
+                .requestMatchers(HttpMethod.DELETE,"/adverts/**").hasAuthority(ADMIN.name())
+
                 .anyRequest().authenticated()
                 .and()
-                .csrf(AbstractHttpConfigurer::disable) //TODO: should be fixed in the future
                 .cors()
                 .and()
+                .csrf().disable() //TODO: should be fixed in the future
                 .httpBasic();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         return http.build();
@@ -58,9 +64,8 @@ public class SpringSecurityConfiguration {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        //TODO: should be fixed in the future
+        //TODO: should be fixed in the future by adding a proxy-server like Nginx
         //var allowedOrigins = Arrays.asList(allowedOriginsLine.split(","));
-        //config.setAllowedOriginPatterns(allowedOrigins);
         config.setAllowCredentials(true);
         config.setAllowedOriginPatterns(Collections.singletonList("*"));
         config.addAllowedMethod("*");

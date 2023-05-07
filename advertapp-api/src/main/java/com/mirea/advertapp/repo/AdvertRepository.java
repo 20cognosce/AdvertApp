@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface AdvertRepository extends CrudRepository<Advert, Long> {
-
-    List<Advert> findByTitleContainsIgnoreCase(String title);
+    long countById(Long id);
+    List<Advert> findAllByTitleContainsIgnoreCase(String title);
 }

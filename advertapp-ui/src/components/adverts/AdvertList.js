@@ -1,25 +1,33 @@
 import React from 'react'
-import {Grid, Header, Form, Icon, Image, Input, Item, Segment} from 'semantic-ui-react'
+import {Form, Grid, Header, Icon, Image, Input, Item, Segment} from 'semantic-ui-react'
 
 function AdvertList({
                         adverts,
-                        titleToSearch,
+                        advertTitleToFind,
                         isAdvertsLoading,
                         handleInputChange,
-                        handleSearchAdvert,
+                        handleFindAdverts,
                         handleGetImageUrlById}) {
     let advertsList
     if (adverts.length === 0) {
         advertsList = <Item key='no-advert'>Пока нет объявлений</Item>
     } else {
         advertsList = adverts.map(advert => {
-            let address = Object.values(advert.address)
-            address.shift() //removes id
+            let addressFromDto = Object.values(advert.address)
+            addressFromDto.shift() //removes id
+            const address = [];
+
+            for (const item of addressFromDto) {
+                if (item !== '') {
+                    address.push(item);
+                }
+            }
 
             return (
                 <Item key={advert.id}>
-                    <Image src={handleGetImageUrlById(advert.images[0].id)}
-                           size='large' bordered rounded/>
+                    { (advert.images.length > 0) &&
+                        <Image src={handleGetImageUrlById(advert.images[0].id)} size='large' bordered rounded/>
+                    }
                     <Item.Content>
                         <Item.Header>{advert.title}</Item.Header>
                         <Item.Meta>#{advert.id}</Item.Meta>
@@ -45,13 +53,13 @@ function AdvertList({
                     </Grid.Column>
 
                     <Grid.Column floated='right' width={4}>
-                        <Form onSubmit={handleSearchAdvert}>
+                        <Form onSubmit={handleFindAdverts}>
                             <Input
                                 fluid
                                 action={{icon: 'search'}}
-                                name='titleToSearch'
+                                name='advertTitleToFind'
                                 placeholder='Поиск по названию'
-                                value={titleToSearch}
+                                value={advertTitleToFind}
                                 onChange={handleInputChange}
                             />
                         </Form>
