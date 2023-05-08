@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom'
+import {HashRouter, Navigate, Route, Routes} from 'react-router-dom'
 import {AuthProvider} from './components/auth/AuthContext'
 import PrivateRoute from './components/nav/PrivateRoute'
 import Navbar from './components/nav/Navbar'
@@ -15,7 +15,7 @@ function App() {
 
     return (
         <AuthProvider>
-            <Router>
+            <HashRouter>
                 <Navbar/>
                 <Routes>
                     <Route path='/' element={<Home/>}/>
@@ -26,7 +26,7 @@ function App() {
                     <Route path="/adverts/new" element={<PrivateRoute><AdvertsCreatePage/></PrivateRoute>}/>
                     <Route path="*" element={<Navigate to="/"/>}/>
                 </Routes>
-            </Router>
+            </HashRouter>
         </AuthProvider>
     )
 }
