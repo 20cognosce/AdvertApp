@@ -1,6 +1,11 @@
 <summary>Application pre-setup</summary>
 
-    Assure that the current profile is prod in application.yml 
+    1. Set HOST_IP env variable (your host machine external IP)
+       in .env file in current directory
+
+    HOST_IP=192.168.000.000
+
+    2. Assure that the current profile is prod in application.yml 
 
 <summary>Install docker on your system</summary>
     <br>
