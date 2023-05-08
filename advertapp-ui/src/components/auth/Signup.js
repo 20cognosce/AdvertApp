@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import {NavLink, Navigate} from 'react-router-dom'
-import {Button, Form, Grid, Segment, Message} from 'semantic-ui-react'
+import {Link, Navigate} from 'react-router-dom'
+import {Button, Form, Grid, Menu, Message, Segment} from 'semantic-ui-react'
 import AuthContext from './AuthContext'
 import {advertApi} from '../util/AdvertApi'
 import {handleLogError} from '../util/ErrorHandler'
@@ -125,7 +125,7 @@ class Signup extends Component {
                             </Segment>
                         </Form>
                         <Message>{`Уже есть аккаунт? `}
-                            <a href='/login' color='teal' as={NavLink} to="/login">Войти</a>
+                            <Menu.Item as={Link} to="/login" >Войти</Menu.Item>
                         </Message>
                         {isError && <Message negative>{errorMessage}</Message>}
                     </Grid.Column>

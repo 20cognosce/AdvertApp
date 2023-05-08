@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import {NavLink, Navigate} from 'react-router-dom'
-import {Button, Form, Grid, Segment, Message, Dimmer, Loader} from 'semantic-ui-react'
+import {Link, Navigate} from 'react-router-dom'
+import {Button, Dimmer, Form, Grid, Loader, Menu, Message, Segment} from 'semantic-ui-react'
 import AuthContext from './AuthContext'
 import {advertApi} from '../util/AdvertApi'
 import {handleLogError} from '../util/ErrorHandler'
@@ -95,7 +95,7 @@ class Login extends Component {
                             </Segment>
                         </Form>
                         <Message>{'Еще нет аккаунта? '}
-                            <a href='/signup' color='teal' as={NavLink} to="/signup">Зарегистрироваться</a>
+                            <Menu.Item as={Link} to="/signup" >Зарегистрироваться</Menu.Item>
                         </Message>
                         {
                             isError &&
