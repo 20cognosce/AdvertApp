@@ -3,8 +3,12 @@ FROM node:18.14.0
 WORKDIR /home/advertapp-ui
 COPY . .
 RUN npm ci
+RUN npm install -g serve
 
-ENV NODE_ENV production
+ARG BACKEND_BASE_URI
+ENV REACT_APP_BACKEND_BASE_URI $BACKEND_BASE_URI
+
+RUN npm run build
 
 EXPOSE 3000
-CMD [ "npm", "start"]
+CMD [ "npx", "serve", "build" ]
