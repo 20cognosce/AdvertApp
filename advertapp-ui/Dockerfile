@@ -11,4 +11,4 @@ ENV REACT_APP_BACKEND_BASE_URI $BACKEND_BASE_URI
 RUN npm run build
 
 EXPOSE 3000
-CMD [ "npx", "serve", "build" ]
+CMD [ "npx", "serve", "-n", "build" ]
